@@ -6,7 +6,7 @@ on:
     types: [ closed ]
 
 env:
-  APPLICATION_NAME: "article-store-test"
+  APPLICATION_NAME: "arachni-back"
 
 jobs:
   clean-os:

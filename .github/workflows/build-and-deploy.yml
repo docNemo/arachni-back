@@ -11,8 +11,8 @@ env:
   DOCKERFILE: "Dockerfile"
   IMAGE_NAME: ${{ github.repository }}
 
-  APPLICATION_NAME: "article-store-test"
-  OS_PROJECT: "article-store-test"
+  APPLICATION_NAME: "arachni-back"
+  OS_PROJECT: "arachni"
   APP_TEMPLATE: "DeploymentConfig.yml"
   HOST_PORT: "8080"
   OS_ROUTE: "apps.os-lab-1.neo"
