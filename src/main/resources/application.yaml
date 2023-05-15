@@ -20,7 +20,7 @@ spring:
   datasource:
     password: ${database.password}
     driver-class-name: org.postgresql.Driver
-    jdbcUrl: jdbc:postgresql://10.147.18.144:5432/arachni
+    jdbcUrl: jdbc:postgresql://192.168.3.187:5432/arachni
     username: app_tuz
   liquibase:
     enabled: 'false'
