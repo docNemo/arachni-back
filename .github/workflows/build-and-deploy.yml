@@ -98,11 +98,17 @@ jobs:
         with:
           oc: 4
 
+      - name: Get DNS server from zerotier
+        id: dns
+        run: |
+          dns=$(sudo zerotier-cli -j listnetworks | jq '.[].dns.servers[0]')
+          echo "dns=$dns" >> $GITHUB_OUTPUT
+
       - name: Add OS host to resolv.conf
         run: |
           sudo mv /etc/resolv.conf /etc/resolv1.conf
           cat /etc/resolv1.conf | sudo tee -a /etc/resolv.conf
-          echo "nameserver ${{ secrets.DNS_IP }}" | sudo tee -a /etc/resolv.conf
+          echo "nameserver ${{ output.dns }}" | sudo tee -a /etc/resolv.conf
 
       - name: Log in to OpenShift
         run: |
