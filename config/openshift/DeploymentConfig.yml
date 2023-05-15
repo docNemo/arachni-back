@@ -62,7 +62,11 @@ objects:
                 - name: APPLICATION_NAME
                   value: ${APPLICATION_NAME}
                 - name: JAVA_OPTS
-                  value: ''
+                  value: '-Ddatabase.password=DATABASE_PASSWORD'
+                - name: DATABASE_PASSWORD
+                  secret:
+                    secretName: database-password
+
 
   - kind: Service
     apiVersion: v1

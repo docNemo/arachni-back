@@ -163,7 +163,6 @@
         <!-- See https://checkstyle.org/config_design.html -->
         <module name="FinalClass"/>
         <module name="InterfaceIsType"/>
-        <module name="VisibilityModifier"/>
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See https://checkstyle.org/config_misc.html -->
