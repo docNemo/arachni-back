@@ -101,8 +101,7 @@ jobs:
       - name: Get DNS server from zerotier
         id: dns
         run: |
-          dns=$(sudo zerotier-cli -j listnetworks | jq '.[].dns.servers[0]')
-          echo "dns=$dns" >> $GITHUB_OUTPUT
+          echo "dns=$(sudo zerotier-cli -j listnetworks | jq '.[].dns.servers[0]')" >> $GITHUB_ENV
 
       - name: Add OS host to resolv.conf
         run: |
