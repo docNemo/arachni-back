@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>ru.mai</groupId>
-    <artifactId>article-store</artifactId>
+    <artifactId>arachni-back</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>article-store</name>
 
@@ -44,8 +44,24 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.27</version>
         </dependency>
 
         <dependency>
@@ -59,9 +75,27 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>./</directory>
+                <excludes>
+                    <exclude>.idea</exclude>
+                    <exclude>target</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -81,7 +115,10 @@
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
-                    <linkXRef>false</linkXRef>
+                    <includeResources>true</includeResources>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <includeTestResources>true</includeTestResources>
+                    <includes>**\/*.java</includes>
                 </configuration>
                 <executions>
                     <execution>
@@ -92,6 +129,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.8.0</version>
+                <configuration>
+                    <changeLogFile>db-changes/db.changelog.xml</changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <databaseChangeLogTableName>arachni_changelog</databaseChangeLogTableName>
+                    <databaseChangeLogLockTableName>arachni_changelog_lock</databaseChangeLogLockTableName>
+                    <promtOnNonLocalDatabase>false</promtOnNonLocalDatabase>
+                </configuration>
             </plugin>
         </plugins>
     </build>
