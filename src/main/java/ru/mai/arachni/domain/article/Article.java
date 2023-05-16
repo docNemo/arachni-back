@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "articles")
@@ -29,7 +29,7 @@ public class Article {
     private String creator;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    private ZonedDateTime creationDate;
 
     @Column(name = "text")
     private String text;
