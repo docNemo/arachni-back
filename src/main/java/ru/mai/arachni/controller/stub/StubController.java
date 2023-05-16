@@ -1,7 +1,6 @@
 package ru.mai.arachni.controller.stub;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,39 +16,14 @@ import ru.mai.arachni.service.stub.StubService;
 public class StubController {
     private final StubService stubService;
 
-//    @GetMapping("/get")
-//    public StubResponse helloGet(@RequestParam String name) {
-//        return stubService.helloForGet(name);
-//    }
-//
-//    @GetMapping("/get/{name}")
-//    public StubResponse helloGetWithPathVariable(@PathVariable String name) {
-//        return stubService.helloForGet(name);
-//    }
-//
-//    @PostMapping("/post")
-//    public StubResponse helloPost(@RequestBody StubRequest stubRequest) {
-//        return stubService.helloForPost(stubRequest);
-//    }
-
     @PostMapping("/article")
     public void createArticle(@RequestParam String title, @RequestParam String text) {
         stubService.createArticle(title, text);
-    }
-
-    @GetMapping("/article/{idArticle}")
-    public StubArticleResponse getArticle(@PathVariable Long idArticle) {
-        return stubService.getArticle(idArticle);
     }
 
     @PutMapping("/article/{idArticle}")
     public StubArticleResponse updateArticle(@PathVariable Long idArticle, final String newText) {
         return stubService.updateArticle(idArticle, newText);
     }
-
-//    @DeleteMapping("/article/{idArticle}")
-//    public void deleteArticle(@PathVariable Long idArticle) {
-//        stubService.deleteArticle(idArticle);
-//    }
 
 }

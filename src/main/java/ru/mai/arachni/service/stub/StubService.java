@@ -3,28 +3,17 @@ package ru.mai.arachni.service.stub;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mai.arachni.domain.article.Article;
-import ru.mai.arachni.dto.request.stub.StubRequest;
 import ru.mai.arachni.dto.response.stub.StubArticleResponse;
-import ru.mai.arachni.dto.response.stub.StubResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StubService {
-    private final String helloPattern;
     private final ArticleRepository articleRepository;
-
-    public StubResponse helloForGet(final String name) {
-        return new StubResponse(helloPattern.formatted(name));
-    }
-
-    public StubResponse helloForPost(final StubRequest stubRequest) {
-        return new StubResponse(helloPattern.formatted(stubRequest.getName()));
-    }
 
     @Transactional()
     public void createArticle(final String title, final String text) {
@@ -32,22 +21,10 @@ public class StubService {
         article.setTitle(title);
         article.setCreator("creator");
         article.setCategories("Catego");
-        article.setCreationDate(LocalDateTime.now());
+        article.setCreationDate(ZonedDateTime.now());
         article.setText(text);
 
         articleRepository.save(article);
-    }
-
-    @Transactional(readOnly = true)
-    public StubArticleResponse getArticle(final Long idArticle) {
-        Optional<Article> article = articleRepository.findById(idArticle);
-        if (article.isEmpty()) {
-            throw new ArachniException(
-                    ArachniError.ARTICLE_NOT_FOUND,
-                    "id_article: " + idArticle
-                    );
-        }
-        return new StubArticleResponse(article.get());
     }
 
     @Transactional()
@@ -66,8 +43,4 @@ public class StubService {
         return new StubArticleResponse(article);
     }
 
-    @Transactional()
-    public void deleteArticle(final Long idArticle) {
-        articleRepository.deleteById(idArticle);
-    }
 }
