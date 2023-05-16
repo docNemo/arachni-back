@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mai.arachni.domain.article.Article;
 import ru.mai.arachni.dto.request.stub.StubRequest;
-import ru.mai.arachni.dto.response.stub.ArticleResponse;
+import ru.mai.arachni.dto.response.stub.StubArticleResponse;
 import ru.mai.arachni.dto.response.stub.StubResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
@@ -39,7 +39,7 @@ public class StubService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleResponse getArticle(final Long idArticle) {
+    public StubArticleResponse getArticle(final Long idArticle) {
         Optional<Article> article = articleRepository.findById(idArticle);
         if (article.isEmpty()) {
             throw new ArachniException(
@@ -47,11 +47,11 @@ public class StubService {
                     "id_article: " + idArticle
                     );
         }
-        return new ArticleResponse(article.get());
+        return new StubArticleResponse(article.get());
     }
 
     @Transactional()
-    public ArticleResponse updateArticle(final Long idArticle, final String newText) {
+    public StubArticleResponse updateArticle(final Long idArticle, final String newText) {
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
         if (articleOptional.isEmpty()) {
             throw new ArachniException(
@@ -63,7 +63,7 @@ public class StubService {
         Article article = articleOptional.get();
         article.setText(newText);
         articleRepository.save(article);
-        return new ArticleResponse(article);
+        return new StubArticleResponse(article);
     }
 
     @Transactional()

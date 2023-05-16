@@ -6,6 +6,6 @@ import ru.mai.arachni.domain.article.Article;
 
 @Data
 @AllArgsConstructor
-public class ArticleResponse {
+public class StubArticleResponse {
     private Article article;
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mai.arachni.dto.response.stub.ArticleResponse;
+import ru.mai.arachni.dto.response.stub.StubArticleResponse;
 import ru.mai.arachni.service.stub.StubService;
 
 @RestController
@@ -39,12 +39,12 @@ public class StubController {
     }
 
     @GetMapping("/article/{idArticle}")
-    public ArticleResponse getArticle(@PathVariable Long idArticle) {
+    public StubArticleResponse getArticle(@PathVariable Long idArticle) {
         return stubService.getArticle(idArticle);
     }
 
     @PutMapping("/article/{idArticle}")
-    public ArticleResponse updateArticle(@PathVariable Long idArticle, final String newText) {
+    public StubArticleResponse updateArticle(@PathVariable Long idArticle, final String newText) {
         return stubService.updateArticle(idArticle, newText);
     }
 
