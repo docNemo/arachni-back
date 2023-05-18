@@ -14,6 +14,10 @@ public enum ArachniError {
     ARTICLE_NOT_FOUND(
             "Статья с данным id не существует",
             HttpStatus.BAD_REQUEST
+    ),
+    INVALID_PARAMETER(
+            "Получен некорректный параметр",
+            HttpStatus.BAD_REQUEST
     );
 
     private final String errorMessage;

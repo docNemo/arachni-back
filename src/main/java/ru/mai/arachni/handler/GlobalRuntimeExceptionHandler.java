@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.mai.arachni.exception.ArachniErrorRepresentation;
 import ru.mai.arachni.exception.ArachniException;
 
+import static ru.mai.arachni.exception.ArachniError.INVALID_PARAMETER;
 import static ru.mai.arachni.exception.ArachniError.UNKNOWN_ERROR;
 
 @ControllerAdvice
@@ -25,6 +27,23 @@ public class GlobalRuntimeExceptionHandler {
                         new ArachniErrorRepresentation(
                                 UNKNOWN_ERROR.name(),
                                 UNKNOWN_ERROR.getErrorMessage()
+                        )
+                );
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentTypeMismatchException(
+            final MethodArgumentTypeMismatchException e
+    ) {
+        LOGGER.error("Handling: ", e);
+
+        return ResponseEntity
+                .status(INVALID_PARAMETER.getStatusCode())
+                .body(
+                        new ArachniErrorRepresentation(
+                                INVALID_PARAMETER.name(),
+                                INVALID_PARAMETER.getErrorMessage()
+                                        + ": " + e.getMessage()
                         )
                 );
     }
