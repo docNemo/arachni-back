@@ -14,6 +14,14 @@ public enum ArachniError {
     ARTICLE_NOT_FOUND(
             "Статья с данным id не существует",
             HttpStatus.BAD_REQUEST
+    ),
+    DUPLICATE_TITLE_ERROR(
+            "Статья с таким названием уже существует",
+            HttpStatus.BAD_REQUEST
+    ),
+    EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED(
+            "Невозможно сохранить статью с пустыми атрибутами",
+            HttpStatus.BAD_REQUEST
     );
 
     private final String errorMessage;
