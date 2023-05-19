@@ -50,7 +50,7 @@ jobs:
           iteration=1
           until oc login -u ${{ secrets.LOGIN_OS }} -p ${{ secrets.PASSWORD_OS }} --server=https://${{ secrets.OPENSHIFT_SERVER }}:6443 --insecure-skip-tls-verify
           do
-              echo "Unsuccessful login to OS"
+              echo "Unsuccessful login to OS $iteration"
               if [[ $iteration -eq $max_iteration ]]
               then
                 break
