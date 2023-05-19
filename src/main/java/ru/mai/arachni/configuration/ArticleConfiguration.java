@@ -9,7 +9,9 @@ import ru.mai.arachni.service.ArticleService;
 public class ArticleConfiguration {
 
     @Bean
-    public ArticleService articleService(ArticleRepository articleRepository) {
+    public ArticleService articleService(
+            ArticleRepository articleRepository
+    ) {
         return new ArticleService(articleRepository);
     }
 }
