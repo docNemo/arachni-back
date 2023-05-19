@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
-    private final ArticleValidator articleValidator;
+    //private final ArticleValidator articleValidator;
 
     @Transactional
     public ArticleResponse updateArticle(
@@ -30,16 +30,16 @@ public class ArticleService {
                     "id_article: " + idArticle
             );
         }
-        if (!articleValidator.isValidUpdateArticleRequest(updateArticleRequest)) {
-            throw new ArachniException(
-                    ArachniError.EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED,
-                    "newTitle: %s, newCategories: %s, newText: %s".formatted(
-                            updateArticleRequest.getNewTitle(),
-                            updateArticleRequest.getNewCategories(),
-                            updateArticleRequest.getNewText()
-                    )
-            );
-        }
+//        if (!articleValidator.isValidUpdateArticleRequest(updateArticleRequest)) {
+//            throw new ArachniException(
+//                    ArachniError.EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED,
+//                    "newTitle: %s, newCategories: %s, newText: %s".formatted(
+//                            updateArticleRequest.getNewTitle(),
+//                            updateArticleRequest.getNewCategories(),
+//                            updateArticleRequest.getNewText()
+//                    )
+//            );
+//        }
 
         Article article = articleOptional.get();
         article.setTitle(updateArticleRequest.getNewTitle());

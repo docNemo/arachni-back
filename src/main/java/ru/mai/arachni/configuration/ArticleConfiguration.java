@@ -11,9 +11,9 @@ public class ArticleConfiguration {
 
     @Bean
     public ArticleService articleService(
-            ArticleRepository articleRepository,
-            ArticleValidator articleValidator
+            ArticleRepository articleRepository //,
+//            ArticleValidator articleValidator
     ) {
-        return new ArticleService(articleRepository, articleValidator);
+        return new ArticleService(articleRepository);//, articleValidator);
     }
 }
