@@ -15,8 +15,8 @@ public enum ArachniError {
             "Статья с данным id не существует",
             HttpStatus.BAD_REQUEST
     ),
-    DUPLICATE_TITLE_ERROR(
-            "Статья с таким названием уже существует",
+    DUPLICATE_ARTICLE_ATTRIBUTE(
+            "Статья с таким названием или содержанием уже существует",
             HttpStatus.BAD_REQUEST
     ),
     EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED(

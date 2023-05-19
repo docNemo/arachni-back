@@ -13,7 +13,7 @@ import ru.mai.arachni.exception.ArachniException;
 
 import java.util.stream.Collectors;
 
-import static ru.mai.arachni.exception.ArachniError.DUPLICATE_TITLE_ERROR;
+import static ru.mai.arachni.exception.ArachniError.DUPLICATE_ARTICLE_ATTRIBUTE;
 import static ru.mai.arachni.exception.ArachniError.INVALID_JSON_PARAMETERS;
 import static ru.mai.arachni.exception.ArachniError.INVALID_HTTP_MESSAGE;
 import static ru.mai.arachni.exception.ArachniError.UNKNOWN_ERROR;
@@ -45,11 +45,11 @@ public class GlobalRuntimeExceptionHandler {
         LOGGER.error("Handling: ", e);
 
         return ResponseEntity
-                .status(DUPLICATE_TITLE_ERROR.getStatusCode())
+                .status(DUPLICATE_ARTICLE_ATTRIBUTE.getStatusCode())
                 .body(
                         new ArachniErrorRepresentation(
-                                DUPLICATE_TITLE_ERROR.name(),
-                                DUPLICATE_TITLE_ERROR.getErrorMessage()
+                                DUPLICATE_ARTICLE_ATTRIBUTE.name(),
+                                DUPLICATE_ARTICLE_ATTRIBUTE.getErrorMessage()
                         )
                 );
     }
@@ -90,7 +90,10 @@ public class GlobalRuntimeExceptionHandler {
                 .body(
                         new ArachniErrorRepresentation(
                                 INVALID_HTTP_MESSAGE.name(),
-                                INVALID_HTTP_MESSAGE.getErrorMessage()
+                                "%s: %s".formatted(
+                                        INVALID_HTTP_MESSAGE.getErrorMessage(),
+                                        e.getMessage()
+                                )
                         )
                 );
     }
