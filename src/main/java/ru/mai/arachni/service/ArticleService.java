@@ -1,7 +1,6 @@
 package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mai.arachni.domain.article.Article;
 import ru.mai.arachni.dto.request.UpdateArticleRequest;
@@ -9,7 +8,6 @@ import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
-
 
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ public class ArticleService {
     @Transactional
     public ArticleResponse updateArticle(
             final Long idArticle,
-            UpdateArticleRequest updateArticleRequest
+            final UpdateArticleRequest updateArticleRequest
     ) {
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
         if (articleOptional.isEmpty()) {
@@ -35,14 +33,7 @@ public class ArticleService {
         article.setCategories(updateArticleRequest.getNewCategories());
         article.setText(updateArticleRequest.getNewText());
 
-        try {
-            articleRepository.save(article);
-        } catch (DataIntegrityViolationException e) {
-            throw new ArachniException(
-                    ArachniError.DUPLICATE_TITLE_ERROR,
-                    e.getMessage()
-            );
-        }
+        articleRepository.save(article);
 
         return new ArticleResponse(article);
     }
