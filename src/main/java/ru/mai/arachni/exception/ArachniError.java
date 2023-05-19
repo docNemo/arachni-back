@@ -23,7 +23,11 @@ public enum ArachniError {
             "Невозможно сохранить статью с пустыми атрибутами",
             HttpStatus.BAD_REQUEST
     ),
-    INVALID_JSON(
+    INVALID_HTTP_MESSAGE(
+            "Ошибка в HTTP-сообщении",
+            HttpStatus.BAD_REQUEST
+    ),
+    INVALID_JSON_PARAMETERS(
             "Невозможно принять json-файл с пустыми или NULL параметрами",
             HttpStatus.BAD_REQUEST
     );

@@ -1,7 +1,9 @@
 package ru.mai.arachni.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +13,9 @@ import ru.mai.arachni.exception.ArachniException;
 
 import java.util.stream.Collectors;
 
-import static ru.mai.arachni.exception.ArachniError.INVALID_JSON;
+import static ru.mai.arachni.exception.ArachniError.DUPLICATE_TITLE_ERROR;
+import static ru.mai.arachni.exception.ArachniError.INVALID_JSON_PARAMETERS;
+import static ru.mai.arachni.exception.ArachniError.INVALID_HTTP_MESSAGE;
 import static ru.mai.arachni.exception.ArachniError.UNKNOWN_ERROR;
 
 @ControllerAdvice
@@ -34,6 +38,22 @@ public class GlobalRuntimeExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ArachniErrorRepresentation> handleDataIntegrityViolationException(
+            final DataIntegrityViolationException e
+    ) {
+        LOGGER.error("Handling: ", e);
+
+        return ResponseEntity
+                .status(DUPLICATE_TITLE_ERROR.getStatusCode())
+                .body(
+                        new ArachniErrorRepresentation(
+                                DUPLICATE_TITLE_ERROR.name(),
+                                DUPLICATE_TITLE_ERROR.getErrorMessage()
+                        )
+                );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentNotValidException(
             final MethodArgumentNotValidException e
@@ -47,12 +67,30 @@ public class GlobalRuntimeExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         return ResponseEntity
-                .status(INVALID_JSON.getStatusCode())
+                .status(INVALID_JSON_PARAMETERS.getStatusCode())
                 .body(
                         new ArachniErrorRepresentation(
-                                INVALID_JSON.name(),
-                                INVALID_JSON.getErrorMessage()
-                                + ": " + issues
+                                INVALID_JSON_PARAMETERS.name(),
+                                "%s: %s".formatted(
+                                        INVALID_JSON_PARAMETERS.getErrorMessage(),
+                                        issues
+                                )
+                        )
+                );
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ArachniErrorRepresentation> handleHttpMessageNotReadableException(
+            final HttpMessageNotReadableException e
+    ) {
+        LOGGER.error("Handling: ", e);
+
+        return ResponseEntity
+                .status(INVALID_HTTP_MESSAGE.getStatusCode())
+                .body(
+                        new ArachniErrorRepresentation(
+                                INVALID_HTTP_MESSAGE.name(),
+                                INVALID_HTTP_MESSAGE.getErrorMessage()
                         )
                 );
     }
