@@ -1,6 +1,7 @@
 package ru.mai.arachni.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class UpdateArticleRequest {
     @NotBlank
     private String newTitle;
 
-    @NotBlank
+    @NotEmpty
     private List<String> newCategories;
 
     @NotBlank
