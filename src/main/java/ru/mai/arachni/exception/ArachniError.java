@@ -18,6 +18,22 @@ public enum ArachniError {
     INVALID_PARAMETER(
             "Получен некорректный параметр",
             HttpStatus.BAD_REQUEST
+    ),
+    DUPLICATE_ARTICLE_ATTRIBUTE(
+            "Статья с таким названием или содержанием уже существует",
+            HttpStatus.BAD_REQUEST
+    ),
+    EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED(
+            "Невозможно сохранить статью с пустыми атрибутами",
+            HttpStatus.BAD_REQUEST
+    ),
+    INVALID_HTTP_MESSAGE(
+            "Ошибка в HTTP-сообщении",
+            HttpStatus.BAD_REQUEST
+    ),
+    INVALID_JSON_PARAMETERS(
+            "Невозможно принять json-файл с пустыми или NULL параметрами",
+            HttpStatus.BAD_REQUEST
     );
 
     private final String errorMessage;

@@ -7,6 +7,7 @@ import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingCriterion;
 import ru.mai.arachni.dto.response.ArticleListResponse;
 import ru.mai.arachni.dto.response.ArticlePreviewResponse;
+import ru.mai.arachni.dto.request.UpdateArticleRequest;
 import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
@@ -21,6 +22,29 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+
+    @Transactional
+    public ArticleResponse updateArticle(
+            final Long idArticle,
+            final UpdateArticleRequest updateArticleRequest
+    ) {
+        Optional<Article> articleOptional = articleRepository.findById(idArticle);
+        if (articleOptional.isEmpty()) {
+            throw new ArachniException(
+                    ArachniError.ARTICLE_NOT_FOUND,
+                    "id_article: " + idArticle
+            );
+        }
+
+        Article article = articleOptional.get();
+        article.setTitle(updateArticleRequest.getNewTitle());
+        article.setCategories(updateArticleRequest.getNewCategories());
+        article.setText(updateArticleRequest.getNewText());
+
+        articleRepository.save(article);
+
+        return new ArticleResponse(article);
+    }
 
     List<Article> sortArticles(
             List<Article> articles,
