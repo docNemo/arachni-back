@@ -1,11 +1,23 @@
 package ru.mai.arachni.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Delegate;
-import ru.mai.arachni.domain.article.Article;
+import lombok.Data;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
+@Data
 @AllArgsConstructor
 public class ArticleResponse {
-    @Delegate
-    private Article article;
+    private Long idArticle;
+
+    private String title;
+
+    private List<String> categories;
+
+    private String creator;
+
+    private ZonedDateTime creationDate;
+
+    private String text;
 }
