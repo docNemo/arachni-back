@@ -2,6 +2,10 @@ package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mai.arachni.dto.request.Order;
+import ru.mai.arachni.dto.request.SortingParameter;
+import ru.mai.arachni.dto.response.ArticleListResponse;
+import ru.mai.arachni.dto.response.ArticlePreviewResponse;
 import ru.mai.arachni.converter.ArticleConverter;
 import ru.mai.arachni.domain.Article;
 import ru.mai.arachni.domain.Category;
@@ -14,8 +18,10 @@ import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,6 +66,21 @@ public class ArticleService {
         }
     }
 
+    Comparator<Article> getArticleComparatorByParameter(
+            SortingParameter sortingParameter,
+            Order order
+    ) {
+        Comparator<Article> comparator = switch (sortingParameter) {
+            case TITLE -> Comparator.comparing(a -> a.getTitle().toLowerCase());
+            case CREATOR -> Comparator.comparing(a -> a.getCreator().getCreator().toLowerCase());
+            case DATE -> Comparator.comparing(Article::getCreationDate);
+        };
+        if (order == Order.DESC) {
+            return Collections.reverseOrder(comparator);
+        }
+        return comparator;
+    }
+
     @Transactional
     public ArticleResponse updateArticle(
             final Long idArticle,
@@ -89,7 +110,7 @@ public class ArticleService {
         if (article.isEmpty()) {
             throw new ArachniException(
                     ArachniError.ARTICLE_NOT_FOUND,
-                    "id_article: " + idArticle
+                    "id_article: %s".formatted(idArticle)
             );
         }
         return articleConverter.convertArticleToArticleResponse(article.get());
@@ -98,5 +119,31 @@ public class ArticleService {
     @Transactional
     public void deleteArticle(final Long idArticle) {
         articleRepository.deleteById(idArticle);
+    }
+
+    @Transactional(readOnly = true)
+    public ArticleListResponse getArticlePreviewList(
+            String searchString,
+            Integer skipArticles,
+            Integer limitArticles,
+            Order order,
+            SortingParameter sortingParameterArticles
+    ) {
+        List<Article> articles = articleRepository
+                .findAll()
+                .stream()
+                .filter(s -> searchString.isBlank() || s.getTitle()
+                        .toLowerCase()
+                        .contains(searchString.toLowerCase()))
+                .toList();
+        List<ArticlePreviewResponse> articlePreviewResponseList = articles
+                .stream()
+                .sorted(getArticleComparatorByParameter(sortingParameterArticles, order))
+                .skip(skipArticles)
+                .limit(limitArticles)
+                .map(articleConverter::convertArticleToArticlePreviewResponse)
+                .toList();
+
+        return new ArticleListResponse(articlePreviewResponseList, articles.size());
     }
 }
