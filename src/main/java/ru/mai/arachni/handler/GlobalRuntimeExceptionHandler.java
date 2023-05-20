@@ -51,8 +51,10 @@ public class GlobalRuntimeExceptionHandler {
                 .body(
                         new ArachniErrorRepresentation(
                                 INVALID_PARAMETER.name(),
-                                INVALID_PARAMETER.getErrorMessage()
-                                        + ": " + e.getMessage()
+                                "%s: %s".formatted(
+                                        INVALID_PARAMETER.getErrorMessage(),
+                                        e.getMessage()
+                                )
                         )
                 );
     }

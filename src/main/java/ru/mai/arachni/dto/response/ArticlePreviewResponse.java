@@ -9,8 +9,8 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class ArticlePreviewResponse {
     private Long idArticle;
-    private String titleArticle;
-    private String categoriesArticle;
-    private String creatorArticle;
+    private String title;
+    private String categories;
+    private String creator;
     private ZonedDateTime creationDate;
 }
