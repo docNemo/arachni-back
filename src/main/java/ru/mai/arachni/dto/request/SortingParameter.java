@@ -1,6 +1,6 @@
 package ru.mai.arachni.dto.request;
 
-public enum SortingCriterion {
+public enum SortingParameter {
     DATE,
     TITLE,
     CREATOR

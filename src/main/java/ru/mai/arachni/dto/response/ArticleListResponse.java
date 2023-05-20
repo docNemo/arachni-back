@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ArticleListResponse {
-    private List<ArticlePreviewResponse> articlePreviewResponseList;
+    private List<ArticlePreviewResponse> articles;
+    private Integer count;
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.dto.request.Order;
-import ru.mai.arachni.dto.request.SortingCriterion;
+import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.request.UpdateArticleRequest;
 import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.dto.response.ArticleListResponse;
@@ -47,7 +47,7 @@ public class ArticleController {
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "DESC") Order order,
-            @RequestParam(defaultValue = "DATE") SortingCriterion sortBy
+            @RequestParam(defaultValue = "DATE") SortingParameter sortBy
     ) {
         return articleService.getArticlePreviewList(skip, limit, order, sortBy);
     }

@@ -2,9 +2,8 @@ package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mai.arachni.domain.article.Article;
 import ru.mai.arachni.dto.request.Order;
-import ru.mai.arachni.dto.request.SortingCriterion;
+import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.response.ArticleListResponse;
 import ru.mai.arachni.dto.response.ArticlePreviewResponse;
 import ru.mai.arachni.converter.ArticleConverter;
@@ -19,11 +18,10 @@ import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -68,47 +66,19 @@ public class ArticleService {
         }
     }
 
-    List<Article> sortArticles(
-            List<Article> articles,
-            SortingCriterion sortingCriterionArticles
+    Comparator<Article> getArticleComparatorByParameter(
+            SortingParameter sortingParameter,
+            Order order
     ) {
-        return articles.stream()
-                .sorted(Sorting.getSortingArticlesLambda(
-                        sortingCriterionArticles
-                ))
-                .collect(Collectors.toList());
-    }
-
-    List<Article> extractSubArticleList(
-            List<Article> articles,
-            Integer skipArticles,
-            Integer limitArticles
-    ) {
-        if (skipArticles >= articles.size()) {
-            return List.of();
+        Comparator<Article> comparator = switch (sortingParameter) {
+            case TITLE -> Comparator.comparing(a -> a.getTitle().toLowerCase());
+            case CREATOR -> Comparator.comparing(a -> a.getCreator().getCreator().toLowerCase());
+            case DATE -> Comparator.comparing(Article::getCreationDate);
+        };
+        if (order == Order.DESC) {
+            return Collections.reverseOrder(comparator);
         }
-        if (skipArticles + limitArticles > articles.size()) {
-            return articles.subList(skipArticles, articles.size());
-        }
-        return articles.subList(skipArticles, skipArticles + limitArticles);
-    }
-
-    List<ArticlePreviewResponse> collectArticlePreviewResponseList(
-            List<Article> articles
-    ) {
-        List<ArticlePreviewResponse> articlePreviewResponseList = new ArrayList<>();
-        for (Article article : articles) {
-            articlePreviewResponseList.add(
-                    new ArticlePreviewResponse(
-                            article.getIdArticle(),
-                            article.getTitle(),
-                            article.getCategories(),
-                            article.getCreator(),
-                            article.getCreationDate()
-                    )
-            );
-        }
-        return articlePreviewResponseList;
+        return comparator;
     }
 
     @Transactional
@@ -140,7 +110,7 @@ public class ArticleService {
         if (article.isEmpty()) {
             throw new ArachniException(
                     ArachniError.ARTICLE_NOT_FOUND,
-                    "id_article: " + idArticle
+                    "id_article: %s".formatted(idArticle)
             );
         }
         return articleConverter.convertArticleToArticleResponse(article.get());
@@ -155,21 +125,18 @@ public class ArticleService {
     public ArticleListResponse getArticlePreviewList(
             Integer skipArticles,
             Integer limitArticles,
-            Order orderArticles,
-            SortingCriterion sortingCriterionArticles
+            Order order,
+            SortingParameter sortingParameterArticles
     ) {
         List<Article> articles = articleRepository.findAll();
-        List<Article> sortedArticles = sortArticles(articles, sortingCriterionArticles);
+        List<ArticlePreviewResponse> articlePreviewResponseList = articles
+                .stream()
+                .sorted(getArticleComparatorByParameter(sortingParameterArticles, order))
+                .skip(skipArticles)
+                .limit(limitArticles)
+                .map(articleConverter::convertArticleToArticlePreviewResponse)
+                .collect(Collectors.toList());
 
-        if (orderArticles == Order.DESC) {
-            Collections.reverse(sortedArticles);
-        }
-
-        List<Article> subListArticles
-                = extractSubArticleList(sortedArticles, skipArticles, limitArticles);
-        List<ArticlePreviewResponse> articlePreviewResponseList
-                = collectArticlePreviewResponseList(subListArticles);
-
-        return new ArticleListResponse(articlePreviewResponseList);
+        return new ArticleListResponse(articlePreviewResponseList, articles.size());
     }
 }
