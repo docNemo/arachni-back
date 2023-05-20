@@ -83,11 +83,11 @@
     <changeSet author="vsurubkov" id="19-05-2023-articles-add-table-articles-categories">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="articles-categories"/>
+                <tableExists tableName="articles_categories"/>
             </not>
         </preConditions>
 
-        <createTable tableName="articles-categories">
+        <createTable tableName="articles_categories">
             <column name="id_article" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -105,7 +105,7 @@
         </preConditions>
 
         <addForeignKeyConstraint constraintName="fk_article_in_articles_categories"
-                                 baseTableName="articles-categories"
+                                 baseTableName="articles_categories"
                                  baseColumnNames="id_article"
                                  referencedTableName="articles"
                                  referencedColumnNames="id_article"
@@ -120,7 +120,7 @@
         </preConditions>
 
         <addForeignKeyConstraint constraintName="fk_category_in_articles_categories"
-                                 baseTableName="articles-categories"
+                                 baseTableName="articles_categories"
                                  baseColumnNames="id_category"
                                  referencedTableName="categories"
                                  referencedColumnNames="id_category"

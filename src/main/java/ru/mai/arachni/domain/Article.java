@@ -10,8 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.SecondaryTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -20,13 +19,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "articles")
-@SecondaryTable(
-        name = "creators",
-        pkJoinColumns = @PrimaryKeyJoinColumn(
-                name = "id_creator",
-                referencedColumnName = "id_creator"
-        )
-)
 @Data
 public class Article {
     @Id
@@ -39,14 +31,15 @@ public class Article {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
-            name = "articles-categories",
+            name = "articles_categories",
             joinColumns = @JoinColumn(name = "id_article"),
             inverseJoinColumns = @JoinColumn(name = "id_category")
     )
-    private List<String> categories;
+    private List<Category> categories;
 
-    @Column(table = "creators", name = "creator")
-    private String creator;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "id_creator")
+    private Creator creator;
 
     @Column(name = "creation_date")
     private ZonedDateTime creationDate;

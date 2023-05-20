@@ -2,6 +2,7 @@ package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mai.arachni.converter.ArticleConverter;
 import ru.mai.arachni.domain.Article;
 import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.exception.ArachniError;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final ArticleConverter articleConverter;
 
     @Transactional(readOnly = true)
     public ArticleResponse getArticle(final Long idArticle) {
@@ -23,7 +25,7 @@ public class ArticleService {
                     "id_article: " + idArticle
             );
         }
-        return new ArticleResponse(article.get());
+        return articleConverter.convertArticleToArticleResponse(article.get());
     }
 
     @Transactional
