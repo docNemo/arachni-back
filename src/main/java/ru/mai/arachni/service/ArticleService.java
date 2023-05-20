@@ -123,19 +123,26 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public ArticleListResponse getArticlePreviewList(
+            String searchString,
             Integer skipArticles,
             Integer limitArticles,
             Order order,
             SortingParameter sortingParameterArticles
     ) {
-        List<Article> articles = articleRepository.findAll();
+        List<Article> articles = articleRepository
+                .findAll()
+                .stream()
+                .filter(s -> searchString.isBlank() || s.getTitle()
+                        .toLowerCase()
+                        .contains(searchString.toLowerCase()))
+                .toList();
         List<ArticlePreviewResponse> articlePreviewResponseList = articles
                 .stream()
                 .sorted(getArticleComparatorByParameter(sortingParameterArticles, order))
                 .skip(skipArticles)
                 .limit(limitArticles)
                 .map(articleConverter::convertArticleToArticlePreviewResponse)
-                .collect(Collectors.toList());
+                .toList();
 
         return new ArticleListResponse(articlePreviewResponseList, articles.size());
     }

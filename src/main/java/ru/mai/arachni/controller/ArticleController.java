@@ -44,11 +44,12 @@ public class ArticleController {
 
     @GetMapping("/list")
     public ArticleListResponse getArticlePreviewList(
+            @RequestParam(defaultValue = "") String searchString,
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "DESC") Order order,
             @RequestParam(defaultValue = "DATE") SortingParameter sortBy
     ) {
-        return articleService.getArticlePreviewList(skip, limit, order, sortBy);
+        return articleService.getArticlePreviewList(searchString, skip, limit, order, sortBy);
     }
 }
