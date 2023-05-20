@@ -7,12 +7,20 @@ import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingCriterion;
 import ru.mai.arachni.dto.response.ArticleListResponse;
 import ru.mai.arachni.dto.response.ArticlePreviewResponse;
+import ru.mai.arachni.converter.ArticleConverter;
+import ru.mai.arachni.domain.Article;
+import ru.mai.arachni.domain.Category;
+import ru.mai.arachni.domain.Creator;
 import ru.mai.arachni.dto.request.UpdateArticleRequest;
 import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
+import ru.mai.arachni.repository.CategoryRepository;
+import ru.mai.arachni.repository.CreatorRepository;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +29,44 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ArticleService {
+    private final ArticleConverter articleConverter;
     private final ArticleRepository articleRepository;
+    private final CreatorRepository creatorRepository;
+    private final CategoryRepository categoryRepository;
+
+    @Transactional(readOnly = true)
+    void setCreatorToArticle(final Article article, final String creatorName) {
+        Optional<Creator> existCreator = creatorRepository.findOneCreatorsByCreator(creatorName);
+        if (existCreator.isPresent()) {
+            article.setCreator(existCreator.get());
+        } else {
+            Creator creator = new Creator();
+            creator.setCreator(creatorName);
+            article.setCreator(creator);
+        }
+    }
+
+    void setCategoriesToArticle(final Article article, final List<String> categories) {
+        article.setCategories(
+                new HashSet<>(categories)
+                        .stream()
+                        .map(this::chooseCategory)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @Transactional(readOnly = true)
+    Category chooseCategory(final String categoryName) {
+        Optional<Category> existCategory
+                = categoryRepository.findOneCategoryByCategory(categoryName);
+        if (existCategory.isPresent()) {
+            return existCategory.get();
+        } else {
+            Category category = new Category();
+            category.setCategory(categoryName);
+            return category;
+        }
+    }
 
     List<Article> sortArticles(
             List<Article> articles,
@@ -81,12 +126,12 @@ public class ArticleService {
 
         Article article = articleOptional.get();
         article.setTitle(updateArticleRequest.getNewTitle());
-        article.setCategories(updateArticleRequest.getNewCategories());
+        setCategoriesToArticle(article, updateArticleRequest.getNewCategories());
         article.setText(updateArticleRequest.getNewText());
 
         articleRepository.save(article);
 
-        return new ArticleResponse(article);
+        return articleConverter.convertArticleToArticleResponse(article);
     }
 
     @Transactional(readOnly = true)
@@ -98,7 +143,7 @@ public class ArticleService {
                     "id_article: " + idArticle
             );
         }
-        return new ArticleResponse(article.get());
+        return articleConverter.convertArticleToArticleResponse(article.get());
     }
 
     @Transactional
