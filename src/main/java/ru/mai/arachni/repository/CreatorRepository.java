@@ -6,5 +6,5 @@ import ru.mai.arachni.domain.Creator;
 import java.util.Optional;
 
 public interface CreatorRepository extends JpaRepository<Creator, Long> {
-    Optional<Creator> findOneCreatorsByCreator(String Creator);
+    Optional<Creator> findOneCreatorsByCreator(String creator);
 }

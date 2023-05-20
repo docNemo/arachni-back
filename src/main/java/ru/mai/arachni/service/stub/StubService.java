@@ -2,10 +2,11 @@ package ru.mai.arachni.service.stub;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mai.arachni.converter.ArticleConverter;
 import ru.mai.arachni.domain.Article;
 import ru.mai.arachni.domain.Category;
 import ru.mai.arachni.domain.Creator;
-import ru.mai.arachni.dto.response.stub.StubArticleResponse;
+import ru.mai.arachni.dto.response.ArticleResponse;
 import ru.mai.arachni.exception.ArachniError;
 import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class StubService {
+    private final ArticleConverter articleConverter;
     private final ArticleRepository articleRepository;
     private final CreatorRepository creatorRepository;
     private final CategoryRepository categoryRepository;
@@ -45,7 +47,8 @@ public class StubService {
     }
 
     Category chooseCategory(final String categoryName) {
-        Optional<Category> existCategory = categoryRepository.findOneCategoryByCategory(categoryName);
+        Optional<Category> existCategory
+                = categoryRepository.findOneCategoryByCategory(categoryName);
         if (existCategory.isPresent()) {
             return existCategory.get();
         } else {
@@ -54,7 +57,6 @@ public class StubService {
             return category;
         }
     }
-
 
     @Transactional
     public void createArticle(final String title, final String text) {
@@ -71,7 +73,7 @@ public class StubService {
     }
 
     @Transactional()
-    public StubArticleResponse updateArticle(final Long idArticle, final String newText) {
+    public ArticleResponse updateArticle(final Long idArticle, final String newText) {
         Optional<Article> articleOptional = articleRepository.findById(idArticle);
         if (articleOptional.isEmpty()) {
             throw new ArachniException(
@@ -83,7 +85,7 @@ public class StubService {
         Article article = articleOptional.get();
         article.setText(newText);
         articleRepository.save(article);
-        return new StubArticleResponse(article);
+        return articleConverter.convertArticleToArticleResponse(article);
     }
 
 }
