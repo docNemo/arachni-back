@@ -14,6 +14,7 @@ import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,10 +38,9 @@ public class ArticleService {
         }
     }
 
-    @Transactional(readOnly = true)
     void setCategoriesToArticle(final Article article, final List<String> categories) {
         article.setCategories(
-                categories
+                new HashSet<>(categories)
                         .stream()
                         .map(this::chooseCategory)
                         .collect(Collectors.toList())
