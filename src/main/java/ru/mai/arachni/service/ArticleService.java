@@ -1,9 +1,7 @@
 package ru.mai.arachni.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.mai.arachni.dto.request.CreateArticleRequest;
 import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingParameter;
