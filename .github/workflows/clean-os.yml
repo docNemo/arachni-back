@@ -33,11 +33,6 @@ jobs:
         with:
           network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
 
-      - name: Install oc
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          oc: 4
-
       - name: Get DNS server from zerotier
         id: dns
         run: |
@@ -48,6 +43,11 @@ jobs:
           sudo mv /etc/resolv.conf /etc/resolv1.conf
           cat /etc/resolv1.conf | sudo tee -a /etc/resolv.conf
           echo "nameserver ${{ env.dns }}" | sudo tee -a /etc/resolv.conf
+
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: 4
 
       - name: Log in to OpenShift
         run: |
