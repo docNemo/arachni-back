@@ -139,7 +139,7 @@ jobs:
 
       - name: Delete deploy pod
         run: |
-          names_pods=$(oc get pods | grep -o "${{ env.APPLICATION_NAME }}-${{ steps.meta.outputs.version }}.*deploy" > pods | paste -sd " ")
+          names_pods=$(oc get pods | grep -o "${{ env.APPLICATION_NAME }}-${{ steps.meta.outputs.version }}.*deploy" | paste -sd " ")
           echo $names_pods
           oc delete pod $names_pods
 
