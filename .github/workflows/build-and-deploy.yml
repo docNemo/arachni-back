@@ -141,7 +141,7 @@ jobs:
         run: |
           names_pods=$(oc get pods | grep -o "${{ env.APPLICATION_NAME }}-${{ steps.meta.outputs.version }}.*deploy" | paste -sd " ")
           echo $names_pods
-          oc delete pod arachni arachni-back-devslaves-963888-28-deploy
+          oc delete pod -n arachni arachni-back-devslaves-963888-28-deploy
           echo "ddd"
 
       - name: Logout from OpenShift
