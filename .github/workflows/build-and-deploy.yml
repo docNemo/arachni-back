@@ -93,11 +93,6 @@ jobs:
         with:
           network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
 
-      - name: Install oc
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          oc: 4
-
       - name: Get DNS server from zerotier
         id: dns
         run: |
@@ -109,9 +104,14 @@ jobs:
           cat /etc/resolv1.conf | sudo tee -a /etc/resolv.conf
           echo "nameserver ${{ env.dns }}" | sudo tee -a /etc/resolv.conf
 
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: 4
+
       - name: Log in to OpenShift
         run: |
-          max_iteration=7
+          max_iteration=3
           iteration=1
           until oc login -u ${{ secrets.LOGIN_OS }} -p ${{ secrets.PASSWORD_OS }} --server=https://${{ secrets.OPENSHIFT_SERVER }}:6443 --insecure-skip-tls-verify
           do
