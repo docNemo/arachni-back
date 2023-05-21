@@ -140,7 +140,7 @@ jobs:
       - name: Delete deploy pod
         run: |
           oc get pods | grep -o "${{ env.APPLICATION_NAME }}-${{ steps.meta.outputs.version }}.*deploy" > pods
-          cat pods | xargs -t oc delete pod
+          cat pods | xargs echo
 
       - name: Logout from OpenShift
         run: oc logout
