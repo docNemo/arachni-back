@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateArticleRequest {
+public class CreateArticleRequest {
     @NotBlank
     private String title;
 
@@ -20,4 +20,7 @@ public class UpdateArticleRequest {
 
     @NotBlank
     private String text;
+
+    @NotBlank
+    private String creator;
 }

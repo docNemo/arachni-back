@@ -2,6 +2,7 @@ package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mai.arachni.dto.request.CreateArticleRequest;
 import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.response.ArticleListResponse;
@@ -18,6 +19,7 @@ import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
 
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -90,14 +92,14 @@ public class ArticleService {
         if (articleOptional.isEmpty()) {
             throw new ArachniException(
                     ArachniError.ARTICLE_NOT_FOUND,
-                    "id_article: " + idArticle
+                    "id_article: %s".formatted(idArticle)
             );
         }
 
         Article article = articleOptional.get();
-        article.setTitle(updateArticleRequest.getNewTitle());
-        setCategoriesToArticle(article, updateArticleRequest.getNewCategories());
-        article.setText(updateArticleRequest.getNewText());
+        article.setTitle(updateArticleRequest.getTitle());
+        setCategoriesToArticle(article, updateArticleRequest.getCategories());
+        article.setText(updateArticleRequest.getText());
 
         articleRepository.save(article);
 
@@ -145,5 +147,21 @@ public class ArticleService {
                 .toList();
 
         return new ArticleListResponse(articlePreviewResponseList, articles.size());
+    }
+
+    @Transactional
+    public ArticleResponse createArticle(CreateArticleRequest createArticleRequest) {
+        Article article = new Article();
+        article.setTitle(createArticleRequest.getTitle());
+
+        setCategoriesToArticle(article, createArticleRequest.getCategories());
+        setCreatorToArticle(article, createArticleRequest.getCreator());
+
+        article.setText(createArticleRequest.getText());
+        article.setCreationDate(ZonedDateTime.now());
+
+        articleRepository.save(article);
+
+        return articleConverter.convertArticleToArticleResponse(article);
     }
 }

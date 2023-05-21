@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.mai.arachni.dto.request.CreateArticleRequest;
 import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.request.UpdateArticleRequest;
@@ -51,5 +53,12 @@ public class ArticleController {
             @RequestParam(defaultValue = "DATE") SortingParameter sortBy
     ) {
         return articleService.getArticlePreviewList(searchString, skip, limit, order, sortBy);
+    }
+
+    @PostMapping
+    public ArticleResponse createArticle(
+            @RequestBody @Valid CreateArticleRequest createArticleRequest
+    ) {
+        return articleService.createArticle(createArticleRequest);
     }
 }
