@@ -13,11 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UpdateArticleRequest {
     @NotBlank
-    private String newTitle;
+    private String title;
 
     @NotEmpty
-    private List<String> newCategories;
+    private List<@NotBlank String> categories;
 
     @NotBlank
-    private String newText;
+    private String text;
 }
