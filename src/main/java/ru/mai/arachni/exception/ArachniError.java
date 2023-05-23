@@ -36,7 +36,7 @@ public enum ArachniError {
             HttpStatus.BAD_REQUEST
     ),
     INVALID_PAGINATION_PARAMETER(
-            "Не корректные параметры пагинации",
+            "Некорректные параметры пагинации",
             HttpStatus.BAD_REQUEST
     );
 
