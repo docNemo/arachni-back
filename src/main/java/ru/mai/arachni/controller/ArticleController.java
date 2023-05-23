@@ -2,6 +2,7 @@ package ru.mai.arachni.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.dto.request.CreateArticleRequest;
-import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.request.UpdateArticleRequest;
 import ru.mai.arachni.dto.response.ArticleResponse;
@@ -49,7 +49,7 @@ public class ArticleController {
             @RequestParam(defaultValue = "") String searchString,
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
-            @RequestParam(defaultValue = "DESC") Order order,
+            @RequestParam(defaultValue = "DESC") Sort.Direction order,
             @RequestParam(defaultValue = "DATE") SortingParameter sortBy
     ) {
         return articleService.getArticlePreviewList(searchString, skip, limit, order, sortBy);

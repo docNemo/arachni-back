@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import static ru.mai.arachni.exception.ArachniError.DUPLICATE_ARTICLE_ATTRIBUTE;
 import static ru.mai.arachni.exception.ArachniError.INVALID_JSON_PARAMETERS;
 import static ru.mai.arachni.exception.ArachniError.INVALID_HTTP_MESSAGE;
+import static ru.mai.arachni.exception.ArachniError.INVALID_PAGINATION_PARAMETER;
 import static ru.mai.arachni.exception.ArachniError.INVALID_PARAMETER;
 import static ru.mai.arachni.exception.ArachniError.UNKNOWN_ERROR;
 
@@ -113,6 +114,25 @@ public class GlobalRuntimeExceptionHandler {
                                 INVALID_HTTP_MESSAGE.name(),
                                 "%s: %s".formatted(
                                         INVALID_HTTP_MESSAGE.getErrorMessage(),
+                                        e.getMessage()
+                                )
+                        )
+                );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ArachniErrorRepresentation> handleIllegalArgumentException(
+            final IllegalArgumentException e
+    ) {
+        LOGGER.error("Handling: ", e);
+
+        return ResponseEntity
+                .status(INVALID_PAGINATION_PARAMETER.getStatusCode())
+                .body(
+                        new ArachniErrorRepresentation(
+                                INVALID_PAGINATION_PARAMETER.name(),
+                                "%s: %s".formatted(
+                                        INVALID_PAGINATION_PARAMETER.getErrorMessage(),
                                         e.getMessage()
                                 )
                         )

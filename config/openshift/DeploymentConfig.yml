@@ -118,10 +118,10 @@ parameters:
     value: '1'
   - name:   LIMITS_MEMORY
     required: true
-    value: '250Mi'
+    value: '500Mi'
   - name:   REQUESTS_CPU
     required: true
     value: '1'
   - name:   REQUESTS_MEMORY
     required: true
-    value: '250Mi'
+    value: '500Mi'
