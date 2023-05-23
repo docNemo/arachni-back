@@ -133,7 +133,7 @@ public class ArticleService {
                 .map(articleConverter::convertArticleToArticlePreviewResponse)
                 .toList();
 
-        return new ArticleListResponse(articlePreviewResponseList, articles.getTotalPages());
+        return new ArticleListResponse(articlePreviewResponseList, articles.getTotalElements());
     }
 
     @Transactional
