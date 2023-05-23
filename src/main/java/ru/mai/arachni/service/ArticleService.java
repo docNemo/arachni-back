@@ -2,7 +2,6 @@ package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mai.arachni.dto.request.CreateArticleRequest;
@@ -20,6 +19,7 @@ import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
+import ru.mai.arachni.repository.OffsetBasedPageRequest;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -116,10 +116,11 @@ public class ArticleService {
             Sort.Direction order,
             SortingParameter sortingParameterArticles
     ) {
+
         Page<Article> articles = articleRepository
                 .findByTitleContainingIgnoreCase(
                         searchString,
-                        PageRequest.of(
+                        new OffsetBasedPageRequest(
                                 skipArticles,
                                 limitArticles,
                                 Sort.by(
