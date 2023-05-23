@@ -103,6 +103,9 @@ jobs:
           sudo mv /etc/resolv.conf /etc/resolv1.conf
           cat /etc/resolv1.conf | sudo tee -a /etc/resolv.conf
           echo "nameserver ${{ env.dns }}" | sudo tee -a /etc/resolv.conf
+          /sbin/sysctl net.ipv4.ip_forward
+          /sbin/sysctl -w net.ipv4.ip_forward=1
+
 
       - name: Install oc
         uses: redhat-actions/openshift-tools-installer@v1
