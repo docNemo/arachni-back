@@ -34,6 +34,10 @@ public enum ArachniError {
     INVALID_JSON_PARAMETERS(
             "Невозможно принять json-файл с пустыми или NULL параметрами",
             HttpStatus.BAD_REQUEST
+    ),
+    INVALID_PAGINATION_PARAMETER(
+            "Не корректные параметры пагинации",
+            HttpStatus.BAD_REQUEST
     );
 
     private final String errorMessage;

@@ -13,11 +13,11 @@ public class OffsetBasedPageRequest implements Pageable {
 
     public OffsetBasedPageRequest(long offsetParam, int limitParam, Sort sortParam) {
         if (offsetParam < 0) {
-            throw new IllegalArgumentException("Offset не может быть меньше 0");
+            throw new IllegalArgumentException("Offset (skip) меньше 0");
         }
 
         if (limitParam < 1) {
-            throw new IllegalArgumentException("Limit не может быть меньше 1");
+            throw new IllegalArgumentException("Limit меньше 1");
         }
         this.limit = limitParam;
         this.offset = offsetParam;
