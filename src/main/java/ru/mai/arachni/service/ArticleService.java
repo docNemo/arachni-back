@@ -19,7 +19,7 @@ import ru.mai.arachni.exception.ArachniException;
 import ru.mai.arachni.repository.ArticleRepository;
 import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
-import ru.mai.arachni.repository.OffsetBasedPageRequest;
+import ru.mai.arachni.repository.pagerequest.OffsetBasedPageRequest;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;

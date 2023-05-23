@@ -1,4 +1,4 @@
-package ru.mai.arachni.repository;
+package ru.mai.arachni.repository.pagerequest;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.domain.Pageable;
