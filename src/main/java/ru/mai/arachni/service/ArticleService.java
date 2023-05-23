@@ -1,9 +1,11 @@
 package ru.mai.arachni.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mai.arachni.dto.request.CreateArticleRequest;
-import ru.mai.arachni.dto.request.Order;
 import ru.mai.arachni.dto.request.SortingParameter;
 import ru.mai.arachni.dto.response.ArticleListResponse;
 import ru.mai.arachni.dto.response.ArticlePreviewResponse;
@@ -20,10 +22,8 @@ import ru.mai.arachni.repository.CategoryRepository;
 import ru.mai.arachni.repository.CreatorRepository;
 
 import java.time.ZonedDateTime;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -66,21 +66,6 @@ public class ArticleService {
             category.setCategory(categoryName);
             return category;
         }
-    }
-
-    Comparator<Article> getArticleComparatorByParameter(
-            SortingParameter sortingParameter,
-            Order order
-    ) {
-        Comparator<Article> comparator = switch (sortingParameter) {
-            case TITLE -> Comparator.comparing(a -> a.getTitle().toLowerCase());
-            case CREATOR -> Comparator.comparing(a -> a.getCreator().getCreator().toLowerCase());
-            case DATE -> Comparator.comparing(Article::getCreationDate);
-        };
-        if (order == Order.DESC) {
-            return Collections.reverseOrder(comparator);
-        }
-        return comparator;
     }
 
     @Transactional
@@ -128,25 +113,27 @@ public class ArticleService {
             String searchString,
             Integer skipArticles,
             Integer limitArticles,
-            Order order,
+            Sort.Direction order,
             SortingParameter sortingParameterArticles
     ) {
-        List<Article> articles = articleRepository
-                .findAll()
-                .stream()
-                .filter(s -> searchString.isBlank() || s.getTitle()
-                        .toLowerCase()
-                        .contains(searchString.toLowerCase()))
-                .toList();
+        Page<Article> articles = articleRepository
+                .findByTitleContainingIgnoreCase(
+                        searchString,
+                        PageRequest.of(
+                                skipArticles,
+                                limitArticles,
+                                Sort.by(
+                                        order,
+                                        sortingParameterArticles.getPropertyName()
+                                )
+                        )
+                );
+
         List<ArticlePreviewResponse> articlePreviewResponseList = articles
-                .stream()
-                .sorted(getArticleComparatorByParameter(sortingParameterArticles, order))
-                .skip(skipArticles)
-                .limit(limitArticles)
                 .map(articleConverter::convertArticleToArticlePreviewResponse)
                 .toList();
 
-        return new ArticleListResponse(articlePreviewResponseList, articles.size());
+        return new ArticleListResponse(articlePreviewResponseList, articles.getTotalPages());
     }
 
     @Transactional
