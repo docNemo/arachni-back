@@ -26,7 +26,7 @@
                 <constraints nullable="false"/>
             </column>
             <column  name="text"  type="text">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>

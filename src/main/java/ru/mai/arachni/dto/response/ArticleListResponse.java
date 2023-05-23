@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ArticleListResponse {
     private List<ArticlePreviewResponse> articles;
-    private Integer count;
+    private Long count;
 }
