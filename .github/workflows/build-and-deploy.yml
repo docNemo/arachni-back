@@ -109,10 +109,6 @@ jobs:
         with:
           oc: 4
 
-      - run: |
-          sleep 30
-          ping ${{ secrets.OPENSHIFT_SERVER }}
-
       - name: Log in to OpenShift
         run: |
           max_iteration=3
