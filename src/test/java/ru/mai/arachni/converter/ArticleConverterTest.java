@@ -21,20 +21,22 @@ public class ArticleConverterTest {
 
     @BeforeEach
     void setup() {
-        Long idArticle = 10L;
-        String strCreator = "Автор";
-        String title = "Название";
-        String text = "Это какой-то случайный текст";
-        List<String> strCategories = List.of("Категория 1", "Категория 2");
-        ZonedDateTime dateTime = ZonedDateTime.now();
+        final Long idArticle = 10L;
+        final Long idCreator = 5L;
+        final String strCreator = "Автор";
+        final String title = "Название";
+        final String text = "Это какой-то случайный текст";
+        final List<Long> idCategories = List.of(0L, 1L);
+        final List<String> strCategories = List.of("Категория 1", "Категория 2");
+        final ZonedDateTime dateTime = ZonedDateTime.now();
 
         articleConverter = new ArticleConverter();
 
-        Creator creator = new Creator(5L, strCreator);
+        Creator creator = new Creator(idCreator, strCreator);
 
         List<Category> categories = List.of(
-                new Category(0L, strCategories.get(0)),
-                new Category(1L, strCategories.get(1))
+                new Category(idCategories.get(0), strCategories.get(0)),
+                new Category(idCategories.get(1), strCategories.get(1))
         );
 
         article = new Article(

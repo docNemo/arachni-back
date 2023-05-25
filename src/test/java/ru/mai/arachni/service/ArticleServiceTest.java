@@ -36,16 +36,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ArticleServiceTest {
-    private final Long ID_ARTICLE_1 = 10L;
-    private final Long ID_ARTICLE_2 = 11L;
-    private final String STR_CREATOR_1 = "Автор";
-    private final String STR_CREATOR_2 = "Другой автор";
-    private final String TITLE_1 = "Название";
-    private final String TITLE_2 = "Другое название";
-    private final String TEXT = "Это какой-то случайный текст";
-    private final List<String> STR_CATEGORIES_1 = List.of("Категория 1", "Категория 2");
-    private final List<String> STR_CATEGORIES_2 = List.of("Категория 2", "Категория 3");
-    private final ZonedDateTime DATE_TIME = ZonedDateTime.now();
+    private static final Long ID_ARTICLE_1 = 10L;
+    private static final Long ID_ARTICLE_2 = 11L;
+    private static final Long ID_CREATOR = 5L;
+    private static final String STR_CREATOR_1 = "Автор";
+    private static final String STR_CREATOR_2 = "Другой автор";
+    private static final String TITLE_1 = "Название";
+    private static final String TITLE_2 = "Другое название";
+    private static final String TEXT = "Это какой-то случайный текст";
+    private static final List<Long> ID_CATEGORIES = List.of(0L, 1L);
+    private static final List<String> STR_CATEGORIES_1 = List.of("Категория 1", "Категория 2");
+    private static final List<String> STR_CATEGORIES_2 = List.of("Категория 2", "Категория 3");
+    private static final ZonedDateTime DATE_TIME = ZonedDateTime.now();
 
     private ArticleRepository articleRepository;
     private CreatorRepository creatorRepository;
@@ -128,16 +130,18 @@ public class ArticleServiceTest {
     }
 
     private void initPageArticles() {
-        String otherText = "Ещё один случайный текст";
+        final List<Long> otherIdCategories = List.of(1L, 2L);
+        final Long otherIdCreator = 6L;
+        final String otherText = "Ещё один случайный текст";
         pageArticles = new PageImpl<>(List.of(
                 new Article(
                         ID_ARTICLE_1,
                         TITLE_1,
                         List.of(
-                                new Category(0L, STR_CATEGORIES_1.get(0)),
-                                new Category(1L, STR_CATEGORIES_1.get(1))
+                                new Category(ID_CATEGORIES.get(0), STR_CATEGORIES_1.get(0)),
+                                new Category(ID_CATEGORIES.get(1), STR_CATEGORIES_1.get(1))
                         ),
-                        new Creator(5L, STR_CREATOR_1),
+                        new Creator(ID_CREATOR, STR_CREATOR_1),
                         DATE_TIME,
                         TEXT
                 ),
@@ -145,10 +149,10 @@ public class ArticleServiceTest {
                         ID_ARTICLE_2,
                         TITLE_2,
                         List.of(
-                                new Category(1L, STR_CATEGORIES_2.get(0)),
-                                new Category(2L, STR_CATEGORIES_2.get(1))
+                                new Category(otherIdCategories.get(0), STR_CATEGORIES_2.get(0)),
+                                new Category(otherIdCategories.get(1), STR_CATEGORIES_2.get(1))
                         ),
-                        new Creator(6L, STR_CREATOR_2),
+                        new Creator(otherIdCreator, STR_CREATOR_2),
                         DATE_TIME,
                         otherText
                 )
@@ -156,13 +160,13 @@ public class ArticleServiceTest {
     }
 
     private void initCategories() {
-        categoryWithId = new Category(0L, STR_CATEGORIES_1.get(0));
+        categoryWithId = new Category(ID_CATEGORIES.get(0), STR_CATEGORIES_1.get(0));
         categoryWithoutId = new Category(null, STR_CATEGORIES_1.get(0));
         sameStrCategories = List.of(STR_CATEGORIES_1.get(0), STR_CATEGORIES_1.get(0));
         differentStrCategories = List.of(STR_CATEGORIES_1.get(0), STR_CATEGORIES_1.get(1));
         categories = List.of(
-                new Category(0L, STR_CATEGORIES_1.get(0)),
-                new Category(1L, STR_CATEGORIES_1.get(1))
+                new Category(ID_CATEGORIES.get(0), STR_CATEGORIES_1.get(0)),
+                new Category(ID_CATEGORIES.get(1), STR_CATEGORIES_1.get(1))
         );
         sameCategories = List.of(
                 new Category(null, STR_CATEGORIES_1.get(0))
@@ -174,9 +178,9 @@ public class ArticleServiceTest {
     }
 
     private void initCreators() {
-        creatorWithId = new Creator(5L, STR_CREATOR_1);
+        creatorWithId = new Creator(ID_CREATOR, STR_CREATOR_1);
         creatorWithoutId = new Creator(null, STR_CREATOR_1);
-        creator = new Creator(5L, STR_CREATOR_1);
+        creator = new Creator(ID_CREATOR, STR_CREATOR_1);
     }
 
     private void initExpectedArticles() {
@@ -249,7 +253,7 @@ public class ArticleServiceTest {
     }
 
     private void initExpectedCategories() {
-        expectedCategoryWithId = new Category(0L, STR_CATEGORIES_1.get(0));
+        expectedCategoryWithId = new Category(ID_CATEGORIES.get(0), STR_CATEGORIES_1.get(0));
         expectedCategoryWithoutId = new Category(null, STR_CATEGORIES_1.get(0));
     }
 
@@ -360,16 +364,17 @@ public class ArticleServiceTest {
 
     @Test
     void testGetArticlePreviewList() {
-        String searchString = "другой";
-
+        final String searchString = "другой";
+        final Integer skip = 0;
+        final Integer limit = 25;
         when(articleRepository.findByTitleContainingIgnoreCase(
                 eq(searchString),
                 any(OffsetBasedPageRequest.class)
         )).thenReturn(pageArticles);
         ArticleListResponse actualArticleListResponse = articleService.getArticlePreviewList(
                 searchString,
-                0,
-                25,
+                skip,
+                limit,
                 Sort.Direction.DESC,
                 SortingParameter.DATE
         );

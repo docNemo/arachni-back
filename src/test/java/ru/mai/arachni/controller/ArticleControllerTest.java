@@ -32,12 +32,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = ArticleController.class)
 public class ArticleControllerTest {
-    private final Long ID_ARTICLE = 10L;
-    private final String STR_CREATOR = "Автор";
-    private final String TITLE = "Название";
-    private final String TEXT = "Это какой-то случайный текст";
-    private final List<String> STR_CATEGORIES = List.of("Категория 1", "Категория 2");
-    private final ZonedDateTime DATE_TIME = ZonedDateTime.now();
+    private static final Long ID_ARTICLE = 10L;
+    private static final String STR_CREATOR = "Автор";
+    private static final String TITLE = "Название";
+    private static final String TEXT = "Это какой-то случайный текст";
+    private static final List<String> STR_CATEGORIES = List.of("Категория 1", "Категория 2");
+    private static final ZonedDateTime DATE_TIME = ZonedDateTime.now();
 
     @Autowired
     private MockMvc mockMvc;
@@ -82,11 +82,11 @@ public class ArticleControllerTest {
                 TEXT
         );
 
-        Long otherIdArticle = 11L;
-        String otherStrCreator = "Другой автор";
-        String otherTitle = "Другое название";
-        List<String> otherStrCategories = List.of("Категория 2", "Категория 3");
-        List<ArticlePreviewResponse> articlePreviewResponseList
+        final Long otherIdArticle = 11L;
+        final String otherStrCreator = "Другой автор";
+        final String otherTitle = "Другое название";
+        final List<String> otherStrCategories = List.of("Категория 2", "Категория 3");
+        final List<ArticlePreviewResponse> articlePreviewResponseList
                 = List.of(
                 new ArticlePreviewResponse(
                         ID_ARTICLE,
@@ -132,10 +132,13 @@ public class ArticleControllerTest {
 
     @Test
     void testGetArticleListResponse() throws Exception {
+        final String searchString = "";
+        final Integer skip = 0;
+        final Integer limit = 25;
         when(articleService.getArticlePreviewList(
-                "",
-                0,
-                25,
+                searchString,
+                skip,
+                limit,
                 Sort.Direction.DESC,
                 SortingParameter.DATE
         )).thenReturn(expectedArticleListResponse);
