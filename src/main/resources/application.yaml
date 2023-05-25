@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info'
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: 'true'
+    path: '/swagger-ui'
+
+helloPattern: "Hello, %s!"
+
+spring:
+  profiles:
+    active: stand
+  datasource:
+    password: ${database.password}
+    driver-class-name: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://${database.address}:5432/arachni
+    username: app_tuz
+  liquibase:
+    enabled: 'false'
