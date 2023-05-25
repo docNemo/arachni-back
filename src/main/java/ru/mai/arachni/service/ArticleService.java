@@ -86,9 +86,9 @@ public class ArticleService {
         setCategoriesToArticle(article, updateArticleRequest.getCategories());
         article.setText(updateArticleRequest.getText());
 
-        articleRepository.save(article);
+        Article recordedArticle = articleRepository.save(article);
 
-        return articleConverter.convertArticleToArticleResponse(article);
+        return articleConverter.convertArticleToArticleResponse(recordedArticle);
     }
 
     @Transactional(readOnly = true)
@@ -148,8 +148,8 @@ public class ArticleService {
         article.setText(createArticleRequest.getText());
         article.setCreationDate(ZonedDateTime.now());
 
-        articleRepository.save(article);
+        Article recordedArticle = articleRepository.save(article);
 
-        return articleConverter.convertArticleToArticleResponse(article);
+        return articleConverter.convertArticleToArticleResponse(recordedArticle);
     }
 }

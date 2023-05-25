@@ -1,8 +1,10 @@
 package ru.mai.arachni.exception;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@EqualsAndHashCode(callSuper = false)
 @RequiredArgsConstructor
 @Getter
 public class ArachniException extends RuntimeException {

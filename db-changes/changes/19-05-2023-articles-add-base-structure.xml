@@ -22,7 +22,7 @@
             <column  name="id_creator"  type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column  name="creation_date"  type="datetime">
+            <column  name="creation_date"  type="timestamp with time zone">
                 <constraints nullable="false"/>
             </column>
             <column  name="text"  type="text">

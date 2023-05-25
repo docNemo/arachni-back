@@ -20,7 +20,7 @@ public enum ArachniError {
             HttpStatus.BAD_REQUEST
     ),
     DUPLICATE_ARTICLE_ATTRIBUTE(
-            "Статья с таким названием или содержанием уже существует",
+            "Статья с таким названием уже существует",
             HttpStatus.BAD_REQUEST
     ),
     EMPTY_OR_NULL_PROPERTIES_ENCOUNTERED(
