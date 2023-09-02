@@ -146,9 +146,11 @@ jobs:
       - name: Clear Zerotier members
         run: | 
           export ip=$(sudo zerotier-cli -j listnetworks | jq '.[].assignedAddresses[0]' | tr -d /24 | tr -d \")
+          echo $ip
           export MEMBER_ID=$( \
           curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member \
-          | jq 'select(.[].config.ipAssignments[0]=="${ip}") | .[].nodeId' \
+          | jq 'select(.[].config.ipAssignments[0]=="env.ip") | .[].nodeId' \
           | tr -d \"\
           )
+          echo $MEMBER_ID
           curl -X DELETE -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member/${MEMBER_ID}
