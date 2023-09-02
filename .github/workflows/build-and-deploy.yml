@@ -141,13 +141,13 @@ jobs:
 
       - name: Leave from Zerotier network
         run: |
-          echo "ip=$(sudo zerotier-cli -j listnetworks | jq '.[].assignedAddresses[0]' | sed 's/\/24//g' | tr -d \")" >> $GITHUB_ENV
+          echo "ip=$(sudo zerotier-cli -j listnetworks | jq '.[].assignedAddresses[0]' | sed 's/\/24//g' | tr -d \\\")" >> $GITHUB_ENV
           sudo zerotier-cli leave ${{ secrets.ZEROTIER_NETWORK_ID }}
 
       - name: Clear Zerotier members
         run: |
-          curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[].nodeId' | tr -d \")
-          echo "member_id=$( curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[0].nodeId' | tr -d \")" >> $GITHUB_ENV
+          curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[].nodeId' | tr -d \\\")
+          echo "member_id=$( curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[0].nodeId' | tr -d \\\")" >> $GITHUB_ENV
 
       - name: Clear Zerotier members
         run: |
