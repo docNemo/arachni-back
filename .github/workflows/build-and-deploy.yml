@@ -146,11 +146,7 @@ jobs:
 
       - name: Clear Zerotier members
         run: |
-          echo "member_id=$( \
-          curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member \
-          | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[].nodeId' \
-          | tr -d \\\" \
-          )" >> $GITHUB_ENV
+          echo "member_id=$( curl -X GET -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member | jq 'select(.[].config.ipAssignments[0]=="${{ env.ip }}") | .[].nodeId' | tr -d \\\")" >> $GITHUB_ENV
 
       - name: Clear Zerotier members
         run: |
