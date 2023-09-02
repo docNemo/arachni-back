@@ -85,7 +85,7 @@ objects:
       type: ClusterIP
       sessionAffinity: None
     status:
-      loadBalancer: {}
+      loadBalancer: { }
 
   - kind: Route
     apiVersion: route.openshift.io/v1
@@ -105,23 +105,23 @@ objects:
 parameters:
   - name: APPLICATION_NAME
     required: true
-  - name:   IMAGE
+  - name: IMAGE
     required: true
-  - name:   IMAGE_SHA
+  - name: IMAGE_SHA
     required: true
-  - name:   HOST_PORT
+  - name: HOST_PORT
     required: true
-  - name:   OS_ROUTE
+  - name: OS_ROUTE
     required: true
-  - name:   LIMITS_CPU
+  - name: LIMITS_CPU
     required: true
     value: '1'
-  - name:   LIMITS_MEMORY
+  - name: LIMITS_MEMORY
     required: true
     value: '500Mi'
-  - name:   REQUESTS_CPU
+  - name: REQUESTS_CPU
     required: true
     value: '1'
-  - name:   REQUESTS_MEMORY
+  - name: REQUESTS_MEMORY
     required: true
     value: '500Mi'

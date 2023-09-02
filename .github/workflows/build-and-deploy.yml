@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   pull_request:
     branches: [ "master", "develop", "release/**", "feature/**" ]
-    types: [opened, reopened, synchronize, closed]
+    types: [ opened, reopened, synchronize, closed ]
 
 env:
   REGISTRY: ghcr.io
@@ -15,7 +15,7 @@ env:
   OS_PROJECT: "arachni"
   APP_TEMPLATE: "DeploymentConfig.yml"
   HOST_PORT: "8080"
-  OS_ROUTE: "apps.os-lab-1.neo"
+  OS_ROUTE: "apps.os-lab-3.neo"
 
 jobs:
   build-and-deploy:
@@ -34,7 +34,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      #       BUILD JAR
+      # BUILD JAR
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
@@ -44,7 +44,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots clean package
 
-#       BUILD DOCKER CONTAINER
+      # BUILD DOCKER CONTAINER
       - name: Choose source branch
         if: github.event.pull_request.state == 'open'
         run: echo "BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
@@ -87,7 +87,7 @@ jobs:
           clear_sha=$(docker images --digests | grep ${{ steps.meta.outputs.version }} | awk '{print $3}')
           echo "::set-output name=sha::$clear_sha"
 
-      #       DEPLOY
+      # DEPLOY
       - name: ZeroTier
         uses: zerotier/github-action@v1.0.1
         with:
@@ -120,7 +120,6 @@ jobs:
               then
                 break
               fi
-              
               sleep 15
               ((iteration++)) 
           done          
