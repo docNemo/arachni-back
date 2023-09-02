@@ -152,3 +152,4 @@ jobs:
       - name: Clear Zerotier members
         run: |
           curl -X DELETE -H "Authorization: token ${{ secrets.ZEROTIER_TOKEN }}" https://api.zerotier.com/api/v1/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member/${{ env.member_id }}
+
