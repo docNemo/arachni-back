@@ -145,7 +145,7 @@ jobs:
 
       - name: Clear Zerotier members
         run: |
-          echo "ip=$(sudo zerotier-cli -j listnetworks | jq '.[].assignedAddresses[0]' | tr -d /24 | tr -d \")" >> $GITHUB_ENV
+          echo "ip=$(sudo zerotier-cli -j listnetworks | jq '.[].assignedAddresses[0]' | sed 's/\/24//g' | tr -d \\\")" >> $GITHUB_ENV
 
       - name: Clear Zerotier members
         run: |
