@@ -133,7 +133,10 @@ public class ArticleService {
 
         if (
                 Objects.nonNull(articleListRequest.getCategories())
-                        && articleListRequest.getCategories().stream().anyMatch(StringUtils::hasText)
+                        && articleListRequest
+                        .getCategories()
+                        .stream()
+                        .anyMatch(StringUtils::hasText)
         ) {
             articleSpecification = articleSpecification.and(
                     ArticleSpecification.hasCategories(
