@@ -53,7 +53,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <finalName>${parent.artifactId}</finalName>
-                    <mainClass>arachni.ArachniApplication</mainClass>
+                    <mainClass>ru.mai.arachni.ArachniApplication</mainClass>
                 </configuration>
             </plugin>
 
