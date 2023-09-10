@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 @RestController
 @RequestMapping("/article")
 @RequiredArgsConstructor
@@ -50,22 +53,22 @@ public class ArticleController {
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "DESC") Sort.Direction order,
-            @RequestParam(defaultValue = "DATE") SortingParameter sortBy
-//            @RequestParam String creator,
-//            @RequestParam List<String> categories
-//            @RequestParam ZonedDateTime startDate,
-//            @RequestParam ZonedDateTime finishDate
+            @RequestParam(defaultValue = "DATE") SortingParameter sortBy,
+            @RequestParam String creator,
+            @RequestParam List<String> categories,
+            @RequestParam ZonedDateTime startDate,
+            @RequestParam ZonedDateTime finishDate
     ) {
         return articleService.getArticlePreviewList(
                 searchString,
                 skip,
                 limit,
                 order,
-                sortBy
-//                creator,
-//                categories
-//                startDate,
-//                finishDate
+                sortBy,
+                creator,
+                categories,
+                startDate,
+                finishDate
         );
     }
 

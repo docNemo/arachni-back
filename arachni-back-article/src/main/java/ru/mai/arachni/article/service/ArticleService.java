@@ -1,5 +1,7 @@
 package ru.mai.arachni.article.service;
 
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 import ru.mai.arachni.article.converter.ArticleConverter;
 import ru.mai.arachni.article.dto.request.CreateArticleRequest;
 import ru.mai.arachni.article.dto.request.UpdateArticleRequest;
@@ -20,10 +22,12 @@ import ru.mai.arachni.core.repository.ArticleRepository;
 import ru.mai.arachni.core.repository.CategoryRepository;
 import ru.mai.arachni.core.repository.CreatorRepository;
 import ru.mai.arachni.core.repository.pagerequest.OffsetBasedPageRequest;
+import ru.mai.arachni.core.specification.ArticleSpecification;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -112,16 +116,44 @@ public class ArticleService {
             Integer skipArticles,
             Integer limitArticles,
             Sort.Direction order,
-            SortingParameter sortingParameterArticles
-//            String creator,
-//            List<String> categories
-//            ZonedDateTime startDate,
-//            ZonedDateTime finishDate
+            SortingParameter sortingParameterArticles,
+            String creator,
+            List<String> categories,
+            ZonedDateTime startDate,
+            ZonedDateTime finishDate
     ) {
+        Specification<Article> articleSpecification = ArticleSpecification.hasTitle(searchString);
+
+        if (StringUtils.hasText(creator)) {
+            articleSpecification = ArticleSpecification.hasCreator(creator);
+        }
+
+        if (categories.stream().anyMatch(StringUtils::hasText)) {
+            articleSpecification = articleSpecification.and(
+                    ArticleSpecification.hasCategories(
+                            categories
+                                    .stream()
+                                    .filter(StringUtils::hasText)
+                                    .toList()
+                    )
+            );
+        }
+
+        if (Objects.nonNull(startDate)) {
+            articleSpecification = articleSpecification.and(
+                    ArticleSpecification.isLaterThan(startDate)
+            );
+        }
+
+        if (Objects.nonNull(finishDate)) {
+            articleSpecification = articleSpecification.and(
+                    ArticleSpecification.isEarlierThan(finishDate)
+            );
+        }
 
         Page<Article> articles = articleRepository
-                .findByTitleContainingIgnoreCase(
-                        searchString,
+                .findAll(
+                        articleSpecification,
                         new OffsetBasedPageRequest(
                                 skipArticles,
                                 limitArticles,
