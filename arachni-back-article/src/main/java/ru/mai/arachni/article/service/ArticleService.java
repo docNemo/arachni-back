@@ -3,6 +3,7 @@ package ru.mai.arachni.article.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 import ru.mai.arachni.article.converter.ArticleConverter;
+import ru.mai.arachni.article.dto.request.ArticleListRequest;
 import ru.mai.arachni.article.dto.request.CreateArticleRequest;
 import ru.mai.arachni.article.dto.request.UpdateArticleRequest;
 import ru.mai.arachni.article.exception.ArachniError;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mai.arachni.article.dto.request.SortingParameter;
 import ru.mai.arachni.article.dto.response.ArticleListResponse;
 import ru.mai.arachni.article.dto.response.ArticlePreviewResponse;
 import ru.mai.arachni.article.dto.response.ArticleResponse;
@@ -112,26 +112,30 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public ArticleListResponse getArticlePreviewList(
-            String searchString,
-            Integer skipArticles,
-            Integer limitArticles,
-            Sort.Direction order,
-            SortingParameter sortingParameterArticles,
-            String creator,
-            List<String> categories,
-            ZonedDateTime startDate,
-            ZonedDateTime finishDate
+            ArticleListRequest articleListRequest
+//            String searchString,
+//            Integer skipArticles,
+//            Integer limitArticles,
+//            Sort.Direction order,
+//            SortingParameter sortingParameterArticles,
+//            String creator,
+//            List<String> categories,
+//            ZonedDateTime startDate,
+//            ZonedDateTime finishDate
     ) {
-        Specification<Article> articleSpecification = ArticleSpecification.hasTitle(searchString);
+        Specification<Article> articleSpecification = ArticleSpecification.hasTitle(
+                articleListRequest.getSearchString()
+        );
 
-        if (StringUtils.hasText(creator)) {
-            articleSpecification = ArticleSpecification.hasCreator(creator);
+        if (StringUtils.hasText(articleListRequest.getCreator())) {
+            articleSpecification = ArticleSpecification.hasCreator(articleListRequest.getCreator());
         }
 
-        if (categories.stream().anyMatch(StringUtils::hasText)) {
+        if (articleListRequest.getCategories().stream().anyMatch(StringUtils::hasText)) {
             articleSpecification = articleSpecification.and(
                     ArticleSpecification.hasCategories(
-                            categories
+                            articleListRequest
+                                    .getCategories()
                                     .stream()
                                     .filter(StringUtils::hasText)
                                     .toList()
@@ -139,15 +143,15 @@ public class ArticleService {
             );
         }
 
-        if (Objects.nonNull(startDate)) {
+        if (Objects.nonNull(articleListRequest.getCategories())) {
             articleSpecification = articleSpecification.and(
-                    ArticleSpecification.isLaterThan(startDate)
+                    ArticleSpecification.isLaterThan(articleListRequest.getStartDate())
             );
         }
 
-        if (Objects.nonNull(finishDate)) {
+        if (Objects.nonNull(articleListRequest.getFinishDate())) {
             articleSpecification = articleSpecification.and(
-                    ArticleSpecification.isEarlierThan(finishDate)
+                    ArticleSpecification.isEarlierThan(articleListRequest.getFinishDate())
             );
         }
 
@@ -155,11 +159,11 @@ public class ArticleService {
                 .findAll(
                         articleSpecification,
                         new OffsetBasedPageRequest(
-                                skipArticles,
-                                limitArticles,
+                                articleListRequest.getSkip(),
+                                articleListRequest.getLimit(),
                                 Sort.by(
-                                        order,
-                                        sortingParameterArticles.getPropertyName()
+                                        articleListRequest.getOrder(),
+                                        articleListRequest.getSortBy().getPropertyName()
                                 )
                         )
                 );
