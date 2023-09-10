@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.handler;
+package ru.mai.arachni.handler;
 
 import ru.mai.arachni.article.exception.ArachniError;
 import ru.mai.arachni.article.exception.ArachniException;
