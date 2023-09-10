@@ -131,7 +131,10 @@ public class ArticleService {
             articleSpecification = ArticleSpecification.hasCreator(articleListRequest.getCreator());
         }
 
-        if (articleListRequest.getCategories().stream().anyMatch(StringUtils::hasText)) {
+        if (
+                Objects.nonNull(articleListRequest.getCategories())
+                        && articleListRequest.getCategories().stream().anyMatch(StringUtils::hasText)
+        ) {
             articleSpecification = articleSpecification.and(
                     ArticleSpecification.hasCategories(
                             articleListRequest
