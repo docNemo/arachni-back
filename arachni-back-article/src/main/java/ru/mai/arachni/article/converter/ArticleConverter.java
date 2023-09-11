@@ -1,7 +1,7 @@
 package ru.mai.arachni.article.converter;
 
-import ru.mai.arachni.article.dto.response.ArticlePreviewResponse;
-import ru.mai.arachni.article.dto.response.ArticleResponse;
+import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
+import ru.mai.arachni.article.dto.response.article.ArticleResponse;
 import ru.mai.arachni.core.domain.Article;
 import ru.mai.arachni.core.domain.Category;
 

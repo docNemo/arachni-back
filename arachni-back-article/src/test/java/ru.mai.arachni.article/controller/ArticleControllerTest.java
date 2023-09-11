@@ -11,12 +11,12 @@
 //import org.springframework.http.MediaType;
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.web.servlet.MockMvc;
-//import ru.mai.arachni.article.dto.request.CreateArticleRequest;
-//import ru.mai.arachni.article.dto.request.SortingParameter;
-//import ru.mai.arachni.article.dto.request.UpdateArticleRequest;
-//import ru.mai.arachni.article.dto.response.ArticleListResponse;
-//import ru.mai.arachni.article.dto.response.ArticlePreviewResponse;
-//import ru.mai.arachni.article.dto.response.ArticleResponse;
+//import ru.mai.arachni.article.dto.request.article.CreateArticleRequest;
+//import ru.mai.arachni.article.dto.request.article.SortingParameter;
+//import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
+//import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
+//import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
+//import ru.mai.arachni.article.dto.response.article.ArticleResponse;
 //import ru.mai.arachni.article.service.ArticleService;
 //import ru.mai.arachni.configuration.ArticleConfiguration;
 //

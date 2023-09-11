@@ -3,18 +3,18 @@ package ru.mai.arachni.article.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 import ru.mai.arachni.article.converter.ArticleConverter;
-import ru.mai.arachni.article.dto.request.ArticleListRequest;
-import ru.mai.arachni.article.dto.request.CreateArticleRequest;
-import ru.mai.arachni.article.dto.request.UpdateArticleRequest;
+import ru.mai.arachni.article.dto.request.article.ArticleListRequest;
+import ru.mai.arachni.article.dto.request.article.CreateArticleRequest;
+import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
 import ru.mai.arachni.article.exception.ArachniError;
 import ru.mai.arachni.article.exception.ArachniException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mai.arachni.article.dto.response.ArticleListResponse;
-import ru.mai.arachni.article.dto.response.ArticlePreviewResponse;
-import ru.mai.arachni.article.dto.response.ArticleResponse;
+import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
+import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
+import ru.mai.arachni.article.dto.response.article.ArticleResponse;
 import ru.mai.arachni.core.domain.Article;
 import ru.mai.arachni.core.domain.Category;
 import ru.mai.arachni.core.domain.Creator;
@@ -113,15 +113,6 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public ArticleListResponse getArticlePreviewList(
             ArticleListRequest articleListRequest
-//            String searchString,
-//            Integer skipArticles,
-//            Integer limitArticles,
-//            Sort.Direction order,
-//            SortingParameter sortingParameterArticles,
-//            String creator,
-//            List<String> categories,
-//            ZonedDateTime startDate,
-//            ZonedDateTime finishDate
     ) {
         Specification<Article> articleSpecification = ArticleSpecification.hasTitle(
                 articleListRequest.getSearchString()

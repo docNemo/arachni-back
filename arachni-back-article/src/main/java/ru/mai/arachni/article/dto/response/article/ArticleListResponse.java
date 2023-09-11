@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.dto.response;
+package ru.mai.arachni.article.dto.response.article;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

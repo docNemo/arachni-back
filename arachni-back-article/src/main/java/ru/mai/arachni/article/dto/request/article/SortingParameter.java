@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.dto.request;
+package ru.mai.arachni.article.dto.request.article;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
