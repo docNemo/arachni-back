@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.article.dto.request.PaginationRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
-import ru.mai.arachni.article.service.creator.CreatorService;
+import ru.mai.arachni.article.service.CreatorService;
 
 @RestController
 @RequestMapping("/creator")
@@ -29,6 +29,6 @@ public class CreatorController {
                 .skip(skip)
                 .limit(limit)
                 .order(order).build();
-        return creatorService.getCreators(paginationRequest);
+        return creatorService.getCreatorList(paginationRequest);
     }
 }

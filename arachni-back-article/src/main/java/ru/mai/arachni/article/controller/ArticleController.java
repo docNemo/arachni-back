@@ -18,7 +18,7 @@ import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
 import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
 import ru.mai.arachni.article.dto.response.article.ArticleResponse;
-import ru.mai.arachni.article.service.article.ArticleService;
+import ru.mai.arachni.article.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

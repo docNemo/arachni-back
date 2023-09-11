@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findOneCategoryByCategory(String category);
+
     Page<Category> findByCategoryContainingIgnoreCase(String searchString, Pageable pageRequest);
 }

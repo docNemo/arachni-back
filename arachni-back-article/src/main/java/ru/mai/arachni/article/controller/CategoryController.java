@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.article.dto.request.PaginationRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
-import ru.mai.arachni.article.service.category.CategoryService;
+import ru.mai.arachni.article.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
@@ -29,6 +29,6 @@ public class CategoryController {
                 .skip(skip)
                 .limit(limit)
                 .order(order).build();
-        return categoryService.getCategories(paginationRequest);
+        return categoryService.getCategoryList(paginationRequest);
     }
 }

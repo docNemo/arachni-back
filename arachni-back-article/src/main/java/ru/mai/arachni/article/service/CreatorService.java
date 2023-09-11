@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.service.creator;
+package ru.mai.arachni.article.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CreatorService {
     private final CreatorRepository creatorRepository;
 
-    public PaginationResponse<String> getCreators(PaginationRequest paginationRequest) {
+    public PaginationResponse<String> getCreatorList(PaginationRequest paginationRequest) {
         Page<Creator> creatorPage = creatorRepository.findByCreatorContainingIgnoreCase(
                 paginationRequest.getSearchString(),
                 new OffsetBasedPageRequest(

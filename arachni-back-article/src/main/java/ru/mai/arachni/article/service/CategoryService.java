@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.service.category;
+package ru.mai.arachni.article.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public PaginationResponse<String> getCategories(
+    public PaginationResponse<String> getCategoryList(
             PaginationRequest paginationRequest
     ) {
         Page<Category> categoryPage = categoryRepository.findByCategoryContainingIgnoreCase(
