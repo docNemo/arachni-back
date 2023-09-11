@@ -1,22 +1,20 @@
 package ru.mai.arachni.article.dto.request;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Sort;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class ArticleListRequest {
-    private String searchString = "";
-    private Integer skip = 0;
-    private Integer limit = 25;
-    private Sort.Direction order = Sort.Direction.ASC;
-    private SortingParameter sortBy = SortingParameter.TITLE;
+    private String searchString;
+    private Integer skip;
+    private Integer limit;
+    private Sort.Direction order;
+    private SortingParameter sortBy;
     private String creator;
     private List<String> categories;
     private ZonedDateTime startDate;
