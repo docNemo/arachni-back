@@ -12,13 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleListRequest {
-    String searchString;
-    Integer skip;
-    Integer limit;
-    Sort.Direction order;
-    SortingParameter sortBy;
-    String creator;
-    List<String> categories;
-    ZonedDateTime startDate;
-    ZonedDateTime finishDate;
+    private String searchString = "";
+    private Integer skip = 0;
+    private Integer limit = 25;
+    private Sort.Direction order = Sort.Direction.ASC;
+    private SortingParameter sortBy = SortingParameter.TITLE;
+    private String creator;
+    private List<String> categories;
+    private ZonedDateTime startDate;
+    private ZonedDateTime finishDate;
 }
