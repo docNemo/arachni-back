@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.service;
+package ru.mai.arachni.article.service.article;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;

@@ -17,7 +17,7 @@
 //import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
 //import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
 //import ru.mai.arachni.article.dto.response.article.ArticleResponse;
-//import ru.mai.arachni.article.service.ArticleService;
+//import ru.mai.arachni.article.service.article.ArticleService;
 //import ru.mai.arachni.configuration.ArticleConfiguration;
 //
 //import java.text.SimpleDateFormat;

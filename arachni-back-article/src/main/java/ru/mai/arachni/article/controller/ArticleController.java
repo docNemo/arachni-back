@@ -17,7 +17,7 @@ import ru.mai.arachni.article.dto.request.article.SortingParameter;
 import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
 import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
 import ru.mai.arachni.article.dto.response.article.ArticleResponse;
-import ru.mai.arachni.article.service.ArticleService;
+import ru.mai.arachni.article.service.article.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 

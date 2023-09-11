@@ -1,4 +1,4 @@
-package ru.mai.arachni.article.service;
+package ru.mai.arachni.article.service.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,8 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public CategoryListResponse getCategories(CategoryListRequest creatorListRequest) {
-        Page<Category> categoryPage = categoryRepository.findAll(
+        Page<Category> categoryPage = categoryRepository.findByCategoryContainingIgnoreCase(
+                creatorListRequest.getSearchString(),
                 new OffsetBasedPageRequest(
                         creatorListRequest.getSkip(),
                         creatorListRequest.getLimit(),

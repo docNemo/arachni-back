@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.article.dto.request.creator.CreatorListRequest;
 import ru.mai.arachni.article.dto.response.creator.CreatorListResponse;
-import ru.mai.arachni.article.service.CreatorService;
+import ru.mai.arachni.article.service.creator.CreatorService;
 
 @RestController
 @RequestMapping("/category")
