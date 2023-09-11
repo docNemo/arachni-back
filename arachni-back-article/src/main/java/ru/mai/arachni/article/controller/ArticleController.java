@@ -21,7 +21,7 @@ import ru.mai.arachni.article.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -59,9 +59,9 @@ public class ArticleController {
             @RequestParam(required = false) String creator,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false)
-            @DateTimeFormat(pattern = "dd.MM.yyyy") ZonedDateTime startDate,
+            @DateTimeFormat(pattern = "dd.MM.yyyy") Date startDate,
             @RequestParam(required = false)
-            @DateTimeFormat(pattern = "dd.MM.yyyy") ZonedDateTime finishDate
+            @DateTimeFormat(pattern = "dd.MM.yyyy") Date finishDate
     ) {
 
         ArticleListRequest articleListRequest = ArticleListRequest.builder()
