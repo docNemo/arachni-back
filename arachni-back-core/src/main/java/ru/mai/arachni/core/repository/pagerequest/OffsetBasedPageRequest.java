@@ -1,11 +1,12 @@
 package ru.mai.arachni.core.repository.pagerequest;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.ToString;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 
+@ToString
 public class OffsetBasedPageRequest implements Pageable {
     private final int limit;
     private final long offset;
@@ -79,14 +80,5 @@ public class OffsetBasedPageRequest implements Pageable {
     @Override
     public boolean hasPrevious() {
         return offset > limit;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("limit", limit)
-                .append("offset", offset)
-                .append("sort", sort)
-                .toString();
     }
 }
