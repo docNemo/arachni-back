@@ -149,7 +149,7 @@ public class ArticleService {
             );
         }
 
-        if (Objects.nonNull(articleListRequest.getCategories())) {
+        if (Objects.nonNull(articleListRequest.getStartDate())) {
             articleSpecification = articleSpecification.and(
                     ArticleSpecification.isLaterThan(articleListRequest.getStartDate())
             );
