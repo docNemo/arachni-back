@@ -20,6 +20,7 @@
         <module>arachni-back-app</module>
         <module>arachni-back-core</module>
         <module>arachni-back-article</module>
+        <module>arachni-back-db</module>
     </modules>
 
     <properties>
@@ -34,7 +35,7 @@
         <springdoc.version>2.0.2</springdoc.version>
 
         <postgresql.version>42.2.27</postgresql.version>
-        <liquibase-core.version>4.8.0</liquibase-core.version>
+        <liquibase-core.version>4.17.0</liquibase-core.version>
     </properties>
 
     <dependencyManagement>
@@ -75,6 +76,10 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
 

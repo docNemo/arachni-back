@@ -49,9 +49,9 @@
     </changeSet>
 
     <changeSet author="vsurubkov" id="19-05-2023-articles-add-fk-creator-for-table-articles">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <not>
-                <foreignKeyConstraintExists foreignKeyName="fk_creator_in_articles"/>
+                <foreignKeyConstraintExists foreignKeyName="fk_creator_in_articles" foreignKeyTableName="articles"/>
             </not>
         </preConditions>
 
@@ -98,9 +98,10 @@
     </changeSet>
 
     <changeSet author="vsurubkov" id="19-04-2023-artiles-add-fk-article-for-table-articles-categories">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <not>
-                <foreignKeyConstraintExists foreignKeyName="fk_article_in_articles_categories"/>
+                <foreignKeyConstraintExists foreignKeyName="fk_article_in_articles_categories"
+                                            foreignKeyTableName="articles_categories"/>
             </not>
         </preConditions>
 
@@ -113,9 +114,10 @@
     </changeSet>
 
     <changeSet author="vsurubkov" id="19-04-2023-artiles-add-fk-category-for-table-articles-categories">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <not>
-                <foreignKeyConstraintExists foreignKeyName="fk_category_in_articles_categories"/>
+                <foreignKeyConstraintExists foreignKeyName="fk_category_in_articles_categories"
+                                            foreignKeyTableName="articles_categories"/>
             </not>
         </preConditions>
 
