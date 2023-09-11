@@ -55,10 +55,10 @@ public class ArticleController {
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "DESC") Sort.Direction order,
             @RequestParam(defaultValue = "DATE") SortingParameter sortBy,
-            @RequestParam String creator,
-            @RequestParam List<String> categories,
-            @RequestParam ZonedDateTime startDate,
-            @RequestParam ZonedDateTime finishDate
+            @RequestParam(required = false) String creator,
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) ZonedDateTime startDate,
+            @RequestParam(required = false) ZonedDateTime finishDate
     ) {
 
         ArticleListRequest articleListRequest = ArticleListRequest.builder()
