@@ -10,9 +10,11 @@ public class ArticleSpecification {
     public static Specification<Article> hasCreator(String creator) {
         return (article, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(
-                        article
+                        criteriaBuilder.lower(
+                                article
                                 .join("creator")
-                                .get("creator"),
+                                .get("creator")
+                        ),
                         "%" + creator + "%"
                 );
     }
@@ -20,8 +22,8 @@ public class ArticleSpecification {
     public static Specification<Article> hasTitle(String title) {
         return (article, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(
-                        article.get("title"),
-                        "%" + title + "%"
+                        criteriaBuilder.lower(article.get("title")),
+                        "%" + title.toLowerCase() + "%"
                 );
     }
 
