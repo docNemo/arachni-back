@@ -1,19 +1,17 @@
 package ru.mai.arachni.article.dto.request.article;
 
-import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.Sort;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
+import ru.mai.arachni.article.dto.request.PaginationRequest;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
-public class ArticleListRequest {
-    private String searchString;
-    private Integer skip;
-    private Integer limit;
-    private Sort.Direction order;
+@SuperBuilder
+public class ArticleListRequest extends PaginationRequest {
     private SortingParameter sortBy;
     private String creator;
     private List<String> categories;

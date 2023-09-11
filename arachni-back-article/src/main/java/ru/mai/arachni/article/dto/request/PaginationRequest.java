@@ -1,12 +1,12 @@
-package ru.mai.arachni.article.dto.request.category;
+package ru.mai.arachni.article.dto.request;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.domain.Sort;
 
 @Data
-@Builder
-public class CategoryListRequest {
+@SuperBuilder
+public class PaginationRequest {
     private String searchString;
     private Integer skip;
     private Integer limit;

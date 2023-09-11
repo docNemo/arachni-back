@@ -15,7 +15,8 @@ import ru.mai.arachni.article.dto.request.article.ArticleListRequest;
 import ru.mai.arachni.article.dto.request.article.CreateArticleRequest;
 import ru.mai.arachni.article.dto.request.article.SortingParameter;
 import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
-import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
+import ru.mai.arachni.article.dto.response.PaginationResponse;
+import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
 import ru.mai.arachni.article.dto.response.article.ArticleResponse;
 import ru.mai.arachni.article.service.article.ArticleService;
 import jakarta.validation.Valid;
@@ -50,7 +51,7 @@ public class ArticleController {
     }
 
     @GetMapping("/list")
-    public ArticleListResponse getArticlePreviewList(
+    public PaginationResponse<ArticlePreviewResponse> getArticlePreviewList(
             @RequestParam(defaultValue = "") String searchString,
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,

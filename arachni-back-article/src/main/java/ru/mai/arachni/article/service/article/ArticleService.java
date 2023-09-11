@@ -6,13 +6,13 @@ import ru.mai.arachni.article.converter.ArticleConverter;
 import ru.mai.arachni.article.dto.request.article.ArticleListRequest;
 import ru.mai.arachni.article.dto.request.article.CreateArticleRequest;
 import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
+import ru.mai.arachni.article.dto.response.PaginationResponse;
 import ru.mai.arachni.article.exception.ArachniError;
 import ru.mai.arachni.article.exception.ArachniException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mai.arachni.article.dto.response.article.ArticleListResponse;
 import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
 import ru.mai.arachni.article.dto.response.article.ArticleResponse;
 import ru.mai.arachni.core.domain.Article;
@@ -111,7 +111,7 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleListResponse getArticlePreviewList(
+    public PaginationResponse<ArticlePreviewResponse> getArticlePreviewList(
             ArticleListRequest articleListRequest
     ) {
         Specification<Article> articleSpecification = ArticleSpecification.hasTitle(
@@ -169,7 +169,10 @@ public class ArticleService {
                 .map(articleConverter::convertArticleToArticlePreviewResponse)
                 .toList();
 
-        return new ArticleListResponse(articlePreviewResponseList, articles.getTotalElements());
+        return new PaginationResponse<>(
+                articlePreviewResponseList,
+                articles.getTotalElements()
+        );
     }
 
     @Transactional

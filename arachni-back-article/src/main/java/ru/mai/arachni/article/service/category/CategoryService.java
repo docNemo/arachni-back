@@ -3,8 +3,8 @@ package ru.mai.arachni.article.service.category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import ru.mai.arachni.article.dto.request.category.CategoryListRequest;
-import ru.mai.arachni.article.dto.response.category.CategoryListResponse;
+import ru.mai.arachni.article.dto.request.PaginationRequest;
+import ru.mai.arachni.article.dto.response.PaginationResponse;
 import ru.mai.arachni.article.dto.response.category.CategoryResponse;
 import ru.mai.arachni.core.domain.Category;
 import ru.mai.arachni.core.repository.CategoryRepository;
@@ -16,14 +16,16 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public CategoryListResponse getCategories(CategoryListRequest creatorListRequest) {
+    public PaginationResponse<CategoryResponse> getCategories(
+            PaginationRequest paginationRequest
+    ) {
         Page<Category> categoryPage = categoryRepository.findByCategoryContainingIgnoreCase(
-                creatorListRequest.getSearchString(),
+                paginationRequest.getSearchString(),
                 new OffsetBasedPageRequest(
-                        creatorListRequest.getSkip(),
-                        creatorListRequest.getLimit(),
+                        paginationRequest.getSkip(),
+                        paginationRequest.getLimit(),
                         Sort.by(
-                                creatorListRequest.getOrder(),
+                                paginationRequest.getOrder(),
                                 "creator"
                         )
                 )
@@ -37,7 +39,7 @@ public class CategoryService {
                 )
                 .toList();
 
-        return new CategoryListResponse(
+        return new PaginationResponse<>(
                 categoryResponses,
                 categoryPage.getTotalElements()
         );
