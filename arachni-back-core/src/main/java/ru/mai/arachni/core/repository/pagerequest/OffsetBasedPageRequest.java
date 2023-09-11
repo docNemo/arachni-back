@@ -1,6 +1,6 @@
 package ru.mai.arachni.core.repository.pagerequest;
 
-import liquibase.repackaged.org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Sort;
