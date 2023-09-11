@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import ru.mai.arachni.article.dto.request.PaginationRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
-import ru.mai.arachni.article.dto.response.category.CategoryResponse;
 import ru.mai.arachni.core.domain.Category;
 import ru.mai.arachni.core.repository.CategoryRepository;
 import ru.mai.arachni.core.repository.pagerequest.OffsetBasedPageRequest;
@@ -16,7 +15,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public PaginationResponse<CategoryResponse> getCategories(
+    public PaginationResponse<String> getCategories(
             PaginationRequest paginationRequest
     ) {
         Page<Category> categoryPage = categoryRepository.findByCategoryContainingIgnoreCase(
@@ -26,17 +25,15 @@ public class CategoryService {
                         paginationRequest.getLimit(),
                         Sort.by(
                                 paginationRequest.getOrder(),
-                                "creator"
+                                "category"
                         )
                 )
         );
 
-        List<CategoryResponse> categoryResponses = categoryPage
+        List<String> categoryResponses = categoryPage
                 .getContent()
                 .stream()
-                .map(creator -> new CategoryResponse(
-                        creator.getIdCategory(), creator.getCategory())
-                )
+                .map(Category::getCategory)
                 .toList();
 
         return new PaginationResponse<>(

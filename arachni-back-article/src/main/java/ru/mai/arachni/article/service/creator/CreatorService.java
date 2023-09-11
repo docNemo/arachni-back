@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import ru.mai.arachni.article.dto.request.PaginationRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
-import ru.mai.arachni.article.dto.response.creator.CreatorResponse;
 import ru.mai.arachni.core.domain.Creator;
 import ru.mai.arachni.core.repository.CreatorRepository;
 import ru.mai.arachni.core.repository.pagerequest.OffsetBasedPageRequest;
@@ -16,7 +15,7 @@ import java.util.List;
 public class CreatorService {
     private final CreatorRepository creatorRepository;
 
-    public PaginationResponse<CreatorResponse> getCreators(PaginationRequest paginationRequest) {
+    public PaginationResponse<String> getCreators(PaginationRequest paginationRequest) {
         Page<Creator> creatorPage = creatorRepository.findByCreatorContainingIgnoreCase(
                 paginationRequest.getSearchString(),
                 new OffsetBasedPageRequest(
@@ -29,10 +28,10 @@ public class CreatorService {
                 )
         );
 
-        List<CreatorResponse> creatorResponses = creatorPage
+        List<String> creatorResponses = creatorPage
                 .getContent()
                 .stream()
-                .map(creator -> new CreatorResponse(creator.getIdCreator(), creator.getCreator()))
+                .map(Creator::getCreator)
                 .toList();
 
         return new PaginationResponse<>(

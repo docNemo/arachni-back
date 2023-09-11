@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.article.dto.request.PaginationRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
-import ru.mai.arachni.article.dto.response.creator.CreatorResponse;
 import ru.mai.arachni.article.service.creator.CreatorService;
 
 @RestController
@@ -18,7 +17,7 @@ public class CreatorController {
     private final CreatorService creatorService;
 
     @GetMapping("/list")
-    public PaginationResponse<CreatorResponse> getCreators(
+    public PaginationResponse<String> getCreators(
             @RequestParam(defaultValue = "") String searchString,
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
