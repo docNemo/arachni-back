@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum SortingParameter {
+public enum ArticleSortingParameter {
     DATE("creationDate"),
     TITLE("title"),
     CREATOR("creator");

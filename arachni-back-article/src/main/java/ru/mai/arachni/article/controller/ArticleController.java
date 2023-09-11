@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mai.arachni.article.dto.request.article.ArticleListRequest;
 import ru.mai.arachni.article.dto.request.article.CreateArticleRequest;
-import ru.mai.arachni.article.dto.request.article.SortingParameter;
+import ru.mai.arachni.article.dto.request.article.ArticleSortingParameter;
 import ru.mai.arachni.article.dto.request.article.UpdateArticleRequest;
 import ru.mai.arachni.article.dto.response.PaginationResponse;
 import ru.mai.arachni.article.dto.response.article.ArticlePreviewResponse;
@@ -56,7 +56,7 @@ public class ArticleController {
             @RequestParam(defaultValue = "0") Integer skip,
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "DESC") Sort.Direction order,
-            @RequestParam(defaultValue = "DATE") SortingParameter sortBy,
+            @RequestParam(defaultValue = "DATE") ArticleSortingParameter sortBy,
             @RequestParam(required = false) String creator,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false)

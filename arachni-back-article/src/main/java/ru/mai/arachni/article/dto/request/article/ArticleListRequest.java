@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 public class ArticleListRequest extends PaginationRequest {
-    private SortingParameter sortBy;
+    private ArticleSortingParameter sortBy;
     private String creator;
     private List<String> categories;
     private ZonedDateTime startDate;
