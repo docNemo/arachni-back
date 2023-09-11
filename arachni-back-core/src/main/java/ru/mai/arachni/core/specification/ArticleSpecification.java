@@ -10,7 +10,9 @@ public class ArticleSpecification {
     public static Specification<Article> hasCreator(String creator) {
         return (article, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(
-                        article.get("creator"),
+                        article
+                                .join("creator")
+                                .get("creator"),
                         "%" + creator + "%"
                 );
     }
@@ -25,10 +27,10 @@ public class ArticleSpecification {
 
     public static Specification<Article> hasCategories(List<String> categories) {
         return (article, criteriaQuery, criteriaBuilder) ->
-            article.
-                    join("categories")
-                    .get("category")
-                    .in(categories);
+                article.
+                        join("categories")
+                        .get("category")
+                        .in(categories);
     }
 
     public static Specification<Article> isLaterThan(ZonedDateTime startDateTime) {

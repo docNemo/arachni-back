@@ -1,6 +1,7 @@
 package ru.mai.arachni.article.controller;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,8 +58,10 @@ public class ArticleController {
             @RequestParam(defaultValue = "DATE") SortingParameter sortBy,
             @RequestParam(required = false) String creator,
             @RequestParam(required = false) List<String> categories,
-            @RequestParam(required = false) ZonedDateTime startDate,
-            @RequestParam(required = false) ZonedDateTime finishDate
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime startDate,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime finishDate
     ) {
 
         ArticleListRequest articleListRequest = ArticleListRequest.builder()
