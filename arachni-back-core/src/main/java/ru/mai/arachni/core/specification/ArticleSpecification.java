@@ -15,7 +15,7 @@ public class ArticleSpecification {
                                 .join("creator")
                                 .get("creator")
                         ),
-                        "%" + creator + "%"
+                        "%" + creator.toLowerCase() + "%"
                 );
     }
 

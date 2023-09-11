@@ -59,9 +59,9 @@ public class ArticleController {
             @RequestParam(required = false) String creator,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime startDate,
+            @DateTimeFormat(pattern = "dd.MM.yyyy") ZonedDateTime startDate,
             @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ZonedDateTime finishDate
+            @DateTimeFormat(pattern = "dd.MM.yyyy") ZonedDateTime finishDate
     ) {
 
         ArticleListRequest articleListRequest = ArticleListRequest.builder()
