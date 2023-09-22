@@ -119,7 +119,9 @@ public class ArticleService {
         );
 
         if (StringUtils.hasText(articleListRequest.getCreator())) {
-            articleSpecification = ArticleSpecification.hasCreator(articleListRequest.getCreator());
+            articleSpecification = articleSpecification.and(
+                    ArticleSpecification.hasCreator(articleListRequest.getCreator())
+            );
         }
 
         if (
