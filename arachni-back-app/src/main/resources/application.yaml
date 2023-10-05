@@ -18,7 +18,7 @@ helloPattern: "Hello, %s!"
 
 spring:
   profiles:
-    active: stand
+    active: local
   datasource:
     password: ${database.password}
     driver-class-name: org.postgresql.Driver

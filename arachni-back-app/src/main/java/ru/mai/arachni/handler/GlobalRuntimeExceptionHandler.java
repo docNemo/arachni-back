@@ -1,5 +1,8 @@
 package ru.mai.arachni.handler;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.mai.arachni.article.exception.ArachniError;
 import ru.mai.arachni.article.exception.ArachniException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +23,8 @@ import java.util.stream.Collectors;
 public class GlobalRuntimeExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleRuntimeException(
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleRuntimeException(
             final RuntimeException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -36,7 +40,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentTypeMismatchException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentTypeMismatchException(
             final MethodArgumentTypeMismatchException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -55,7 +59,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleDataIntegrityViolationException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleDataIntegrityViolationException(
             final DataIntegrityViolationException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -71,7 +75,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentNotValidException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleMethodArgumentNotValidException(
             final MethodArgumentNotValidException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -96,7 +100,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleHttpMessageNotReadableException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleHttpMessageNotReadableException(
             final HttpMessageNotReadableException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -115,7 +119,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleIllegalArgumentException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleIllegalArgumentException(
             final IllegalArgumentException e
     ) {
         LOGGER.error("Handling: ", e);
@@ -134,7 +138,7 @@ public class GlobalRuntimeExceptionHandler {
     }
 
     @ExceptionHandler(ArachniException.class)
-    public ResponseEntity<ArachniErrorRepresentation> handleArachniException(
+    public @ResponseBody ResponseEntity<ArachniErrorRepresentation> handleArachniException(
             final ArachniException e
     ) {
         LOGGER.error("Handling: ", e);
