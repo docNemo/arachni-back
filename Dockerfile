@@ -1,5 +1,5 @@
 FROM openjdk:20-jdk-oraclelinux7
-COPY target/arachni-back.jar arachni-back.jar
+COPY arachni-back-app/target/arachni-back.jar arachni-back.jar
 
 ENV JAVA_OPTS = ""
 
