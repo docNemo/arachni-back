@@ -22,7 +22,7 @@ spring:
   datasource:
     password: ${database.password}
     driver-class-name: org.postgresql.Driver
-    jdbcUrl: jdbc:postgresql://${database.address}:5432/arachni
+    jdbcUrl: jdbc:postgresql://postgres-lab-1.neo:5432/arachni
     username: app_tuz
   liquibase:
     enabled: 'false'
